@@ -64,7 +64,7 @@ Bring upstream v1.2.6 into the `m3-custom-theme` repo on a branch named `step1-b
 - remove `LICENSE.txt` (upstream's file is `LICENSE`);
 - set `name: m3-custom-theme` in `anvil.yaml`;
 - replace the startup module `_TestForms.ButtonMenuFUI`, which does not exist in the public repo, with `startup_form: Form1`;
-- keep the placeholder `Form1` as the startup form until Step 3 replaces it, and keep its entry in `.anvil_editor.yaml`;
+- keep the placeholder `Form1` as the startup form, and keep its entry in `.anvil_editor.yaml`; Step 3 turns it into the demo form;
 - keep `/.anvil/` in `.gitignore`.
 
 The `m3` dependency disappears from `anvil.yaml` by itself, because the app now *is* the `m3` package. The README is upstream's until we rewrite it at Step 11.
@@ -75,8 +75,9 @@ Write `docs/base-inventory.md` in the project library repo. Inventory the v1.2.6
 *Exit check:* both files exist and every component in the base appears in the inventory.
 
 **Step 3. Build the demo and test app.**
-Create a demo form that shows every existing component in all its states, and set it as the startup form. This is the test harness for every later step. Create it before changing any theme code.
-*Exit check:* the demo form renders the base theme correctly in the Anvil editor and in a published preview.
+Turn `Form1` into the demo form. It is already the startup form. It shows every existing component in each variant and state, built in Python from one data table (`SECTIONS` in `client_code/Form1/__init__.py`), so adding a component later means adding one entry. Every property name and option value in the table is checked against the component's `form_template.yaml` before the file is delivered.
+Step 3 is done in two passes. Pass 3a covers the components that sit in a simple row: buttons, icon buttons, toggle icon buttons, checkbox, radio button, switch, text box, text area, slider, avatar, link, headings, text, cards, progress indicators and dividers. Pass 3b adds the components that need a container or a layout: `ButtonMenu`, `IconButtonMenu`, `AvatarMenu`, `DropdownMenu`, `MenuItem`, `FileLoader`, `RadioGroupPanel`, `SidesheetContent`, `NavigationLink` and the two navigation layouts.
+*Exit check:* Form1 runs in the Anvil editor, every section appears, and the console shows no errors. After Step 4 the same form also shows the light/dark switch.
 
 **Step 4. Prove the dark-mode mechanism.**
 Anvil resolves `%color:...%` tokens into fixed values, so dark mode needs its own mechanism. The chosen approach, to be proven in this step:

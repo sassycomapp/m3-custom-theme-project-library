@@ -1,6 +1,6 @@
 # Gap list: base v1.2.6 compared with the full M3 / M3 Expressive set
 
-Companion to `docs/base-inventory.md`. The foundation findings in Section 1 come from the base files. The component list in Sections 2 and 3 comes from the M3 component catalogue as known at the end of June 2026. It is not read from m3.material.io (the site cannot be read automatically). Confirm it by saving the page https://m3.material.io/components into this repo as `m3-components-page.htm`; any component on that page that is missing below is added to Section 2 before Step 5 ends.
+Companion to `docs/base-inventory.md`. The foundation findings in Section 1 come from the base files. The component list in Sections 2 and 3 was checked against the saved page `Components – Material Design 3.htm` (2 Nov 2026). That page lists 36 component pages, plus an "All buttons" overview. The base covers 13 of them in full (buttons, cards, checkbox, divider, icon buttons, menus, navigation drawer, navigation rail, progress indicators, radio button, sliders, switch, text fields). Three are covered in part: app bars (C7), side sheets (E8) and tooltips (C13). The other 20 are missing and are in Section 2. The check found no component missing from this list.
 
 ## 1. Foundation gaps (found in the base files)
 
@@ -28,9 +28,9 @@ Priority 1 (core components every business app needs):
 | C4 | Snackbar | No | |
 | C5 | FAB and extended FAB | No | Expressive update applies. |
 | C6 | Lists and list items | No | Expressive refresh applies. |
-| C7 | Top app bar as a component | Partly | It exists only as styling inside the two navigation layouts. |
+| C7 | App bars (top, bottom, search app bar) | Partly | The top app bar exists only as styling inside the two navigation layouts. On m3.material.io, bottom and search app bars are part of the App bars page. |
 | C8 | Navigation bar (bottom) | No | Expressive update applies. |
-| C9 | Button groups and segmented button | No | Button groups are new in Expressive and replace the segmented button. |
+| C9 | Button groups and segmented buttons | No | Both have pages on m3.material.io. Button groups are new in Expressive and replace the segmented button, so button groups are built first. |
 | C10 | Badges | No | |
 
 Priority 2:
@@ -52,7 +52,7 @@ Priority 3:
 | # | Component | In base? | Note |
 |---|---|---|---|
 | C20 | Carousel | No | |
-| C21 | Bottom app bar | No | |
+| C21 | (merged into C7) | | The Bottom app bar is part of the App bars page. |
 
 ## 3. Existing components that need an Expressive update
 
@@ -67,6 +67,7 @@ These exist in the base. Each needs its M3 Expressive spec checked, and a varian
 | E5 | Navigation layouts (`NavigationDrawerLayout`, `NavigationRailLayout`) | Expressive rail, and adaptive behaviour at all window size classes (F7). |
 | E6 | `Menu`, `DropdownMenu`, `MenuItem` | Refreshed Expressive menu guidance. |
 | E7 | `Card`, `InteractiveCard` | Check against the current spec during Step 7. |
+| E8 | `SidesheetContent` | The base has the content container for side sheets inside the layouts. Check against the side sheets spec. |
 
 ## 4. Not planned
 
