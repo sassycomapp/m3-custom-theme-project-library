@@ -14,3 +14,8 @@ Mistakes and discoveries from building the theme. Read before each step. Add an 
 | 8 | `material-3-theme-master.zip` differs from v1.2.6 | The zip is a newer copy of upstream's main branch. | Use the git tag `upstream-v1.2.6` as the reference, never the zip. |
 | 9 | `Form1` cannot be edited in the design view | It is built in code. | `Form1` is changed only by file. |
 | 10 | A file was handed over without a destination | Process slip. | Every hand-off names the file and the exact folder. |
+| 11 | Dark mode and palettes could not reach part of the theme | `theme.css` used `%color:...%` tokens directly in 55 places, bypassing the colour variables. | Theme CSS uses `var(--anvil-m3-...)` for every colour. A `%color:` token is allowed only inside the `:root` block. |
+| 12 | A regex replace missed names containing digits | The pattern for colour names had no digits, so `Primary Overlay 2` was skipped. | After any bulk replace, count what is left and list it. Never assume the replace was complete. |
+| 13 | An Excel lock file (`~$...xlsx`) was committed to the library repo | Excel creates it while the file is open, and `git add -A` picked it up. | The library repo ignores `~$*`. Close Excel before committing. |
+| 14 | The colour library's default scheme did not match the base theme | It follows a newer Material specification. | Pass `spec_version="2021"`, and always compare generated colours with the known values before trusting them. |
+

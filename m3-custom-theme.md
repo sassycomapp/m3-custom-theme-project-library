@@ -80,16 +80,17 @@ Step 3 is done in two passes, both now written. Pass 3a covers the components th
 Form1 is only changed by file, never in the Anvil design view. The demo form is built in code, so the design view cannot edit it.
 *Exit check:* Form1 runs in the Anvil editor, every section appears, and the console shows no errors. After Step 4 the same form also shows the light/dark switch.
 
-**Step 4. Prove the dark-mode mechanism.**
-Anvil resolves `%color:...%` tokens into fixed values, so dark mode needs its own mechanism. The chosen approach, to be proven in this step:
-- `theme.css` defines every `--m3x-*` colour variable and also re-assigns the inherited `--anvil-m3-*` variables.
-- Light values come from the `%color:...%` tokens.
-- Dark values are literal values exported from Material Theme Builder and kept in one clearly marked block.
-- The dark block applies when `[data-m3x-theme="dark"]` is set on the root element, and by default follows `prefers-color-scheme`.
-- The attribute is set from Python through `anvil.js` by a function in `m3x_theming.py`, and the user's choice is kept in the browser's local storage. No custom JavaScript is needed for this.
+**Step 4. Prove palettes and dark mode.**
+Findings from the base files: every component colour already goes through the `--anvil-m3-*` variables, but `theme.css` used `%color:...%` tokens directly in 55 places (navigation, modal, text, data grid, page background). Those could not change at runtime, so each was replaced by the matching variable. The result in light mode is identical. The edit is marked in the file and logged in `docs/upstream-edits.md`.
 
-Prove it on three existing components: `Button`, `TextBox`, `Card`.
-*Exit check:* those three components switch correctly between light and dark in the demo form. If the approach fails, the fallback is decided and recorded in Section 3.2 before Step 5.
+What was built:
+- **Four palettes** (`professional_blue`, `warm_coral`, `calm_teal`, `sophisticated_purple`) from `docs/Anvil-M3 color mapping 4 palette.xlsx`, plus the base theme's own colours as `default`. Each has a light and a dark scheme. The dark schemes are generated with Material's colour algorithm from each palette's key colour. Every light colour in the spreadsheet matched that algorithm within 2 steps, which is why the dark partners can be trusted. The base theme's own dark scheme is the published M3 baseline dark scheme, checked colour by colour against the expected Material tones.
+- **`tools/build_palettes.py`** (library repo) reads the spreadsheet and writes `theme/assets/m3x/palettes.css` (app repo). The CSS is never edited by hand. To change a colour, change the spreadsheet and rebuild. Corrections made to the spreadsheet's values are listed in `docs/palette-corrections.md`.
+- **Two attributes on the page's root element** choose the colours: `data-m3x-palette` (a palette name; absent means `default`) and `data-m3x-theme` (`light`, `dark` or `system`; absent means light). Following the device's dark setting is opt-in (`system`), so an existing app never changes appearance unexpectedly.
+- **`client_code/_utils/m3x_theming.py`** sets and remembers them from Python (`set_palette`, `set_mode`, `get_palette`, `get_mode`, `is_dark`, `apply_saved`). A multi-client app sets them once at start-up from the client's own setting.
+- **`Form1`** has Palette and Mode dropdowns at the top, so every component can be inspected in all 10 combinations (5 palettes, light and dark).
+
+*Exit check:* in each of the 10 combinations, every section of `Form1` is readable and nothing keeps its old colour (page background, text, buttons, text boxes, cards, menus, dropdown lists, progress indicators). Hover and pressed states are visibly correct on filled, tonal and elevated buttons. If a combination fails, the cause is recorded in `docs/lessons.md` before Step 5.
 
 **Step 5. Build the token layer.**
 Create `theme/assets/m3x/tokens.css` and import it from `theme.css`. Generate light and dark colour schemes with Material Theme Builder. Take typography, shape, elevation, state-layer and motion values from `material-tokens` and from m3.material.io. Motion tokens cover both the standard duration-and-easing set and the Expressive spring set (stiffness and damping ratio, with separate spatial and effects specs). The Expressive spatial springs are fast 800 / 0.6, default 380 / 0.8 and slow 200 / 0.8. The effects springs are fast 3800 / 1.0, default 1600 / 1.0 and slow 800 / 1.0. These values agree across the Flutter `motor` package, react-native-paper and other implementations. They are confirmed against Google's Jetpack Compose source before they are frozen. Map the colours into `parameters.yaml` (light) and into the dark block (Step 4).
@@ -145,7 +146,7 @@ At each upstream release, fetch the `upstream` remote, merge into `upstream-sync
 
 - Every colour, size, radius, font, shadow and animation value in new CSS comes from a `--m3x-*` variable. Hardcoded values are not allowed in component CSS.
 - Tokens are semantic (`primary`, `on-primary`, `surface`, `outline`), never raw hex values, outside `tokens.css` and the dark block.
-- Light and dark values are defined together. A token with only one scheme is incomplete.
+- Light and dark values are defined together for every palette. A token with only one scheme is incomplete.
 - Token values come from Material Theme Builder and `material-tokens`. Record the source colour and the export date in `tokens.css`.
 
 ### 5.3 Upstream files
