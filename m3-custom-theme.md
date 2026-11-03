@@ -48,7 +48,7 @@ Change these only by editing this section.
 2. **New code uses the prefix `m3x`**: CSS classes `m3x-*`, CSS variables `--m3x-*`, Roles `m3x-*`, Python helper modules `m3x_*`. Inherited `anvil-m3-*` names are left as they are.
 3. **Upstream is tracked through a git remote named `upstream`**, with tag fetching switched off after the baseline is set. This stops upstream tags from colliding with ours.
 4. **Our release tags start at `v2.0.0`**, a version line clearly separate from upstream's `v1.x`. The first release also confirms that Anvil lists our tags as selectable dependency versions.
-5. **Branches**: `main` is always releasable. Work happens on feature branches, one component or one foundation per branch. Upstream merges happen on their own branch, `upstream-sync`.
+5. **Branches**: `master` is the working branch and is always releasable, because the Anvil editor reads and commits to `master` only. All work is committed to `master`. Only upstream merges use their own branch, `upstream-sync`. After any edit made in the Anvil editor, run `git pull` before the next commit.
 6. **Licence**: keep Anvil's MIT notice in `LICENSE` and add our own copyright line beneath it.
 7. **JavaScript policy.** Anvil supports JavaScript (script tags in `head_html`, files in theme assets, and the `anvil.js` bridge from Python), and the base already ships a JavaScript library this way (floating-ui). We use it only where CSS and Python cannot do the job. Any JavaScript file is vendored into `theme/assets/m3x/js/`, version-pinned, and loaded through `head_html` in `anvil.yaml`. No JavaScript is loaded from a CDN at runtime. The base theme loads its fonts from Google Fonts, and that stays as it is until a separate decision is made. We never load or replace the jQuery or Bootstrap that Anvil already provides.
 
@@ -117,7 +117,7 @@ Complete the release checklist in Section 5.10, update `CHANGELOG.md`, publish t
 *Exit check:* a test app (not a production app) switches its dependency to the new version and works unchanged.
 
 **Step 12. Maintain against upstream.**
-At each upstream release, fetch the `upstream` remote, merge into `upstream-sync`, resolve conflicts using the log in `docs/upstream-edits.md`, run the demo form, then merge into `main`.
+At each upstream release, fetch the `upstream` remote, merge into `upstream-sync`, resolve conflicts using the log in `docs/upstream-edits.md`, run the demo form, then merge into `master`.
 
 ### 4.1 Component Build Loop (used in Steps 7 and 8)
 
@@ -129,7 +129,7 @@ At each upstream release, fetch the `upstream` remote, merge into `upstream-sync
 6. Add a toolbox entry in `anvil.yaml` and its icons in `theme/assets/designer_icons/`.
 7. Add the component, in every variant and state, to the demo form.
 8. Run the Section 5.9 checks. Fix every failure.
-9. Merge the branch into `main`.
+9. Commit to `master`.
 
 ## 5. Rules for building the theme
 
@@ -152,6 +152,7 @@ At each upstream release, fetch the `upstream` remote, merge into `upstream-sync
 - The base files stay as they are unless a change is needed. Prefer extending or adding a variant in a new file.
 - Every edit to a base file is marked in the file with a `/* m3x: reason */` comment (or `# m3x: reason` in Python) and logged in `docs/upstream-edits.md` with the file name and the reason. This is what makes Step 12 merges manageable.
 - Do not reformat or reorder base files. Formatting changes create merge conflicts.
+- Never edit the theme's own files through the Anvil editor. That means everything under `_Components`, `Layouts`, `_utils` and `theme`. The editor commits straight to `master` and writes the change into the base file (this happened once with a tooltip on `RadioButton`). Theme files are changed only in the repo files, by commit. The editor is used to run and look at `Form1`.
 
 ### 5.4 Component construction
 
@@ -199,7 +200,7 @@ At each upstream release, fetch the `upstream` remote, merge into `upstream-sync
 - Modular helpers, one purpose per file: `m3x_motion.py`, `m3x_loading.py`, `m3x_snackbar.py`, `m3x_theming.py`.
 - Components do not import each other's internals. Shared code goes in `client_code/_utils/`.
 
-### 5.9 Testing (before every merge to `main`)
+### 5.9 Testing (before every commit to `master`)
 
 1. The component appears in the demo form in every variant and state.
 2. It looks correct in light and dark.
