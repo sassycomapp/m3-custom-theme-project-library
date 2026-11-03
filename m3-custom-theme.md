@@ -76,7 +76,8 @@ Write `docs/base-inventory.md` in the project library repo. Inventory the v1.2.6
 
 **Step 3. Build the demo and test app.**
 Turn `Form1` into the demo form. It is already the startup form. It shows every existing component in each variant and state, built in Python from one data table (`SECTIONS` in `client_code/Form1/__init__.py`), so adding a component later means adding one entry. Every property name and option value in the table is checked against the component's `form_template.yaml` before the file is delivered.
-Step 3 is done in two passes. Pass 3a covers the components that sit in a simple row: buttons, icon buttons, toggle icon buttons, checkbox, radio button, switch, text box, text area, slider, avatar, link, headings, text, cards, progress indicators and dividers. Pass 3b adds the components that need a container or a layout: `ButtonMenu`, `IconButtonMenu`, `AvatarMenu`, `DropdownMenu`, `MenuItem`, `FileLoader`, `RadioGroupPanel`, `SidesheetContent`, `NavigationLink` and the two navigation layouts.
+Step 3 is done in two passes, both now written. Pass 3a covers the components that sit in a simple row: buttons, icon buttons, toggle icon buttons, checkbox, radio buttons (inside a `RadioGroupPanel`), switch, text box, text area, slider, avatar, link, headings, text, cards, progress indicators and dividers. Pass 3b adds `ButtonMenu`, `IconButtonMenu`, `AvatarMenu`, `MenuItem`, `DropdownMenu`, `FileLoader` and `NavigationLink`. The two navigation layouts and `SidesheetContent` cannot sit inside a form, so they get their own demo forms in Step 10, where we change them anyway.
+Form1 is only changed by file, never in the Anvil design view. The demo form is built in code, so the design view cannot edit it.
 *Exit check:* Form1 runs in the Anvil editor, every section appears, and the console shows no errors. After Step 4 the same form also shows the light/dark switch.
 
 **Step 4. Prove the dark-mode mechanism.**
