@@ -171,7 +171,7 @@ At each upstream release, fetch the `upstream` remote, merge into `upstream-sync
 - Avoid `!important`. If an existing Anvil rule can only be beaten with `!important`, add a comment saying which rule and why.
 - Do not add global rules that change how existing components look.
 - Do not use fixed pixel widths for layout. Use relative units and the width classes in 5.7.
-- A component whose shadow, focus ring or touch target reaches outside its box has the outer margin `var(--m3x-component-outer-margin-block) var(--m3x-component-outer-margin-inline)` (8 px above and below, 4 px at the sides). Anvil's containers (FlowPanel, ColumnPanel) cut off anything outside a component's margin box, and content that reaches outside makes the container scroll.
+- A component whose shadow, focus ring or touch target reaches outside its box has the outer margin `var(--m3x-component-outer-margin-block) var(--m3x-component-outer-margin-inline)` (8 px above and below, 4 px at the sides). A component with a shadow of level 3 or higher uses `var(--m3x-component-outer-margin-elevated)` (16 px) instead. Anvil's containers (FlowPanel, ColumnPanel) cut off anything outside a component's margin box, and content that reaches outside makes the container scroll.
 - Use Anvil's `%color:...%` tokens where Anvil needs them, and `--m3x-*` variables everywhere else.
 - Test the CSS in light and dark before merging.
 
