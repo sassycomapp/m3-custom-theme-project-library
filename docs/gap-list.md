@@ -20,39 +20,39 @@ Companion to `docs/base-inventory.md`. The foundation findings in Section 1 come
 
 Priority 1 (core components every business app needs):
 
-| # | Component | In base? | Note |
-|---|---|---|---|
-| C1 | Dialogs | No | The base only restyles Anvil's own modal in `theme.css`. A proper component is needed. |
-| C2 | Chips (assist, filter, input, suggestion) | No | |
-| C3 | Tabs (primary, secondary) | No | |
-| C4 | Snackbar | No | |
-| C5 | FAB and extended FAB | No | Expressive update applies. |
-| C6 | Lists and list items | No | Expressive refresh applies. |
-| C7 | App bars (top, bottom, search app bar) | Partly | The top app bar exists only as styling inside the two navigation layouts. On m3.material.io, bottom and search app bars are part of the App bars page. |
-| C8 | Navigation bar (bottom) | No | Expressive update applies. |
-| C9 | Button groups and segmented buttons | No | Both have pages on m3.material.io. Button groups are new in Expressive and replace the segmented button, so button groups are built first. |
-| C10 | Badges | No | |
+| # | Component | In base? | Note | Status |
+|---|---|---|---|---|
+| C1 | Dialogs | No | The base only restyles Anvil's own modal in `theme.css`. A proper component is needed. | Built: `Dialog` |
+| C2 | Chips (assist, filter, input, suggestion) | No | | Built: `Chip` |
+| C3 | Tabs (primary, secondary) | No | | Built: `Tabs` |
+| C4 | Snackbar | No | | Built: `Snackbar` |
+| C5 | FAB and extended FAB | No | Expressive update applies. | Built: `FloatingActionButton` |
+| C6 | Lists and list items | No | Expressive refresh applies. | Built: `ListItem` |
+| C7 | App bars (top, bottom, search app bar) | Partly | The top app bar exists only as styling inside the two navigation layouts. On m3.material.io, bottom and search app bars are part of the App bars page. | To build |
+| C8 | Navigation bar (bottom) | No | Expressive update applies. | To build |
+| C9 | Button groups and segmented buttons | No | Both have pages on m3.material.io. Button groups are new in Expressive and replace the segmented button, so button groups are built first. | Built: `ButtonGroup` (connected and standard) |
+| C10 | Badges | No | | Built: `Badge` |
 
 Priority 2:
 
-| # | Component | In base? | Note |
-|---|---|---|---|
-| C11 | Date picker | No | The base toolbox offers Anvil's standard DatePicker. |
-| C12 | Time picker | No | |
-| C13 | Tooltips (plain, rich) | Partly | `Button` has a `tooltip` property. No rich tooltip. |
-| C14 | Search (search bar, search view) | No | |
-| C15 | Bottom sheets | No | |
-| C16 | Loading indicator | No | New in Expressive. |
-| C17 | Toolbars (docked, floating) | No | New in Expressive. |
-| C18 | Split button | No | New in Expressive. |
-| C19 | FAB menu | No | New in Expressive. |
+| # | Component | In base? | Note | Status |
+|---|---|---|---|---|
+| C11 | Date picker | No | The base toolbox offers Anvil's standard DatePicker. | To build |
+| C12 | Time picker | No | | To build |
+| C13 | Tooltips (plain, rich) | Partly | `Button` has a `tooltip` property. No rich tooltip. | To build |
+| C14 | Search (search bar, search view) | No | | To build |
+| C15 | Bottom sheets | No | | To build |
+| C16 | Loading indicator | No | New in Expressive. | To build |
+| C17 | Toolbars (docked, floating) | No | New in Expressive. | To build |
+| C18 | Split button | No | New in Expressive. | To build |
+| C19 | FAB menu | No | New in Expressive. | To build |
 
 Priority 3:
 
-| # | Component | In base? | Note |
-|---|---|---|---|
-| C20 | Carousel | No | |
-| C21 | (merged into C7) | | The Bottom app bar is part of the App bars page. |
+| # | Component | In base? | Note | Status |
+|---|---|---|---|---|
+| C20 | Carousel | No | | To build |
+| C21 | (merged into C7) | | The Bottom app bar is part of the App bars page. | |
 
 ## 3. Existing components that need an Expressive update
 
