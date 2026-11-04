@@ -1,18 +1,26 @@
 #!/usr/bin/env python3
-"""Build palettes.css for the M3 custom theme.
+"""Build the colour files of the M3 custom theme.
 
 Reads the four light palettes from the spreadsheet, corrects the surface-container
-levels, generates the matching dark schemes with Material's colour algorithm, and
-writes one CSS file that the theme imports.
+levels, generates the matching dark schemes and the colour roles the spreadsheet
+does not hold with Material's colour algorithm, and writes three files into the
+app repo:
+
+    theme/assets/m3x/palettes.css       the colours of every palette, light and dark
+    theme/parameters.yaml               Anvil's colour list and colour presets
+    client_code/_utils/m3x_presets.py   which Anvil preset belongs to which palette
+
+All three are generated. They are never edited by hand.
 
 Usage (from the project library repo folder):
     python tools/build_palettes.py "docs/Anvil-M3 color mapping 4 palette.xlsx" \
-        ../m3-custom-theme/theme/assets/m3x/palettes.css
+        ../m3-custom-theme
 
 Needs: pip install openpyxl materialyoucolor
 """
 import re
 import sys
+from pathlib import Path
 
 import openpyxl
 from materialyoucolor.dynamiccolor.material_dynamic_colors import (
@@ -56,10 +64,76 @@ LIB = {
     "Surface Container Highest": "surfaceContainerHighest",
 }
 
+# M3 colour roles the spreadsheet and the base theme do not hold. They are
+# generated for every palette and reach the CSS as --m3x-color-* variables.
+EXTRA = {
+    "Error Container": "errorContainer",
+    "Inverse Primary": "inversePrimary",
+    "Surface Tint": "surfaceTint",
+    "Surface Dim": "surfaceDim",
+    "Surface Bright": "surfaceBright",
+    "Surface Container Lowest": "surfaceContainerLowest",
+    "Scrim": "scrim",
+    "Shadow": "shadow",
+    "Primary Fixed": "primaryFixed",
+    "Primary Fixed Dim": "primaryFixedDim",
+    "On Primary Fixed": "onPrimaryFixed",
+    "On Primary Fixed Variant": "onPrimaryFixedVariant",
+    "Secondary Fixed": "secondaryFixed",
+    "Secondary Fixed Dim": "secondaryFixedDim",
+    "On Secondary Fixed": "onSecondaryFixed",
+    "On Secondary Fixed Variant": "onSecondaryFixedVariant",
+    "Tertiary Fixed": "tertiaryFixed",
+    "Tertiary Fixed Dim": "tertiaryFixedDim",
+    "On Tertiary Fixed": "onTertiaryFixed",
+    "On Tertiary Fixed Variant": "onTertiaryFixedVariant",
+}
+
 # Slots regenerated because the spreadsheet values are wrong (see
 # docs/palette-corrections.md).
 CORRECTED = ["Surface Container", "Surface Container High",
              "Surface Container Highest"]
+
+# The base theme's own light colours, exactly as in Anvil's M3 theme v1.2.6
+# (tag base-v1.2.6, theme/parameters.yaml). The default palette keeps them, so
+# an app on the default palette looks exactly like the base theme.
+BASE_LIGHT = {
+    "Primary": "#6750A4", "Primary Container": "#EADDFF",
+    "On Primary": "#FFFFFF", "On Primary Container": "#21005E",
+    "Secondary": "#625B71", "Secondary Container": "#E8DEF8",
+    "On Secondary": "#FFFFFF", "On Secondary Container": "#1D192B",
+    "Tertiary": "#7D5260", "Tertiary Container": "#FFD8E4",
+    "On Tertiary": "#FFFFFF", "On Tertiary Container": "#370B1E",
+    "Error": "#B3261E", "Background": "#FFFBFE", "Surface": "#FFFBFE",
+    "On Background": "#1C1B1F", "On Surface": "#1C1B1F",
+    "Surface Variant": "#E7E0EC", "On Surface Variant": "#49454E",
+    "Outline": "#79747E",
+    "On Disabled": "rgba(29, 27, 32, 0.38)",
+    "Disabled Container": "rgba(29, 27, 32, 0.12)",
+    "Light Overlay 1": "rgba(255, 255, 255, 0.08)",
+    "Light Overlay 2": "rgba(255, 255, 255, 0.12)",
+    "Dark Overlay 1": "rgba(29, 25, 43, 0.08)",
+    "Dark Overlay 2": "rgba(29, 25, 43, 0.12)",
+    "Primary Overlay 1": "rgba(103, 80, 164, 0.05)",
+    "Primary Overlay 2": "rgba(103, 80, 164, 0.08)",
+    "Primary Overlay 3": "rgba(103, 80, 164, 0.12)",
+    "Outline Variant": "#C4C7C5", "On Error": "#FFFFFF",
+    "Surface Container Low": "#F7F2FA", "Surface Container High": "#ECE6F0",
+    "Surface Container Highest": "#E6E0E9",
+    "Disabled Container 2": "rgba(29, 27, 32, 0.04)",
+    "Error Overlay 1": "rgba(179, 38, 30, 0.08)",
+    "Error Overlay 2": "rgba(179, 38, 30, 0.12)",
+    "Dark Overlay 3": "rgba(29, 25, 43, 0.16)",
+    "On Error Container": "#410E0B", "Surface Container": "#F3EDF7",
+    "Inverse Surface": "#322F35", "Inverse On Surface": "#F5EFF7",
+    "On Surface Variant Overlay 1": "rgba(73,69,79, 0.08)",
+    "On Surface Variant Overlay 2": "rgba(73,69,79, 0.12)",
+    "Inverse On Surface Overlay 1": "rgba(245,239,247, 0.08)",
+    "Inverse On Surface Overlay 2": "rgba(245,239,247, 0.12)",
+}
+
+# Anvil's colour list order: the base theme's order, then the extra roles.
+ORDER = list(BASE_LIGHT) + list(EXTRA)
 
 # Published M3 baseline dark scheme: the dark partner of the base theme's colours.
 # Every value was checked to sit on the expected Material tone (80, 20, 30, 90...).
@@ -80,6 +154,28 @@ BASE_DARK = {
     "Surface Container High": "#2B2930", "Surface Container Highest": "#36343B",
 }
 
+# The extra roles of the M3 baseline scheme, from Jetpack Compose Material 3
+# (androidx-main, compose/material3/.../tokens/ColorLightTokens.kt and
+# ColorDarkTokens.kt). Shadow is black in both modes, as the M3 specification sets.
+BASE_EXTRA_LIGHT = {
+    "Error Container": "#F9DEDC", "Inverse Primary": "#D0BCFF",
+    "Surface Tint": "#6750A4", "Surface Dim": "#DED8E1",
+    "Surface Bright": "#FEF7FF", "Surface Container Lowest": "#FFFFFF",
+    "Scrim": "#000000", "Shadow": "#000000",
+    "Primary Fixed": "#EADDFF", "Primary Fixed Dim": "#D0BCFF",
+    "On Primary Fixed": "#21005D", "On Primary Fixed Variant": "#4F378B",
+    "Secondary Fixed": "#E8DEF8", "Secondary Fixed Dim": "#CCC2DC",
+    "On Secondary Fixed": "#1D192B", "On Secondary Fixed Variant": "#4A4458",
+    "Tertiary Fixed": "#FFD8E4", "Tertiary Fixed Dim": "#EFB8C8",
+    "On Tertiary Fixed": "#31111D", "On Tertiary Fixed Variant": "#633B48",
+}
+BASE_EXTRA_DARK = dict(
+    BASE_EXTRA_LIGHT,
+    **{"Error Container": "#8C1D18", "Inverse Primary": "#6750A4",
+       "Surface Tint": "#D0BCFF", "Surface Dim": "#141218",
+       "Surface Bright": "#3B383E", "Surface Container Lowest": "#0F0D13"},
+)
+
 
 def rgb(hexcolor):
     h = hexcolor.lstrip("#")
@@ -91,8 +187,15 @@ def rgba(hexcolor, alpha):
     return f"rgba({r}, {g}, {b}, {alpha})"
 
 
-def slug(name):
-    return "--anvil-m3-" + re.sub(r"[^a-z0-9]+", "-", name.lower()).strip("-")
+def css_name(slot):
+    """The CSS variable of a slot: --anvil-m3-* for base slots, --m3x-color-* for
+    the extra roles."""
+    prefix = "--m3x-color-" if slot in EXTRA else "--anvil-m3-"
+    return prefix + re.sub(r"[^a-z0-9]+", "-", slot.lower()).strip("-")
+
+
+def title(palette, mode):
+    return f"{palette.replace('_', ' ').title()} {mode.title()}"
 
 
 def derived(c, mode):
@@ -126,33 +229,36 @@ def derived(c, mode):
     return d
 
 
-def generate(hue, dark):
+def generate(hue, dark, roles):
     scheme = SchemeTonalSpot(Hct.from_hct(hue, 48, 50), dark, 0.0,
                              spec_version="2021")
     return {name: "#%06X" % (getattr(M, key).get_hct(scheme).to_int() & 0xFFFFFF)
-            for name, key in LIB.items()}
+            for name, key in roles.items()}
 
 
 def read_sheet(path):
     sheet = openpyxl.load_workbook(path).worksheets[0]
     header = [c.value for c in sheet[1]]
     names = header[2:6]
-    slots, order = {n: {} for n in names}, []
+    slots = {n: {} for n in names}
     for row in sheet.iter_rows(min_row=2, values_only=True):
         slot = re.split(r":| --", row[1])[0].strip()
-        order.append(slot)
         for n, value in zip(names, row[2:6]):
             slots[n][slot] = value.strip()
-    return names, slots, order
+    return names, slots
 
 
 def build(path):
-    names, sheet, order = read_sheet(path)
+    """Return {palette: {"light": colours, "dark": colours}} and the corrections."""
+    names, sheet = read_sheet(path)
     assert set(names) == set(KEY_HUES), names
-    schemes, report = {}, []
-    for name in names:
-        light_gen, dark_gen = generate(KEY_HUES[name], False), generate(
-            KEY_HUES[name], True)
+    base_dark = dict(BASE_DARK)
+    base_dark.update(derived(base_dark, "dark"))
+    schemes = {"default": {"light": dict(BASE_LIGHT, **BASE_EXTRA_LIGHT),
+                           "dark": dict(base_dark, **BASE_EXTRA_DARK)}}
+    report = []
+    for name in KEY_HUES:
+        light_gen = generate(KEY_HUES[name], False, LIB)
         light = {s: v.upper() if v.startswith("#") else v
                  for s, v in sheet[name].items()}
         for slot in CORRECTED:
@@ -160,51 +266,47 @@ def build(path):
             light[slot] = light_gen[slot]
         main = {s: light[s] for s in LIB}
         # Integrity check: the formulas reproduce the spreadsheet's own overlay
-        # slots, except Primary Overlay 3 (sheet 0.11, M3 state layer is 0.12).
+        # slots, except Primary Overlay 3 (sheet 0.11, base theme 0.12).
         for slot, value in derived(main, "light").items():
             if slot != "Primary Overlay 3" and light.get(slot) != value:
                 raise SystemExit(f"{name}: {slot} sheet {light.get(slot)} != {value}")
         light.update(derived(main, "light"))
-        dark = {s: dark_gen[s] for s in LIB}
+        light.update(generate(KEY_HUES[name], False, EXTRA))
+        dark = generate(KEY_HUES[name], True, LIB)
         dark.update(derived(dark, "dark"))
-        schemes[name] = (light, dark)
-    base_dark = dict(BASE_DARK)
-    base_dark.update(derived(base_dark, "dark"))
-    return order, schemes, base_dark, report
+        dark.update(generate(KEY_HUES[name], True, EXTRA))
+        schemes[name] = {"light": light, "dark": dark}
+    for name, modes in schemes.items():
+        for mode, colours in modes.items():
+            missing = set(ORDER) - set(colours)
+            if missing:
+                raise SystemExit(f"{name} {mode}: missing {sorted(missing)}")
+    return schemes, report
 
 
-def block(selector, colours, order, indent=""):
+def block(selector, colours, indent=""):
     lines = [f"{indent}{selector} {{"]
-    for slot in order + ["On Background"]:
-        if slot in colours and not (slot == "On Background" and order.count(slot)):
-            lines.append(f"{indent}  {slug(slot)}: {colours[slot]};")
-    if "On Background" in order:
-        lines.append(f"{indent}  {slug('On Background')}: {colours['On Background']};")
+    lines += [f"{indent}  {css_name(s)}: {colours[s]};" for s in ORDER]
     lines.append(f"{indent}}}")
     return "\n".join(lines)
 
 
-def emit(order, schemes, base_dark):
+def emit_css(schemes):
     out = ["/* Generated by tools/build_palettes.py in m3-custom-theme-project-library.",
            "   Do not edit by hand. Source: docs/Anvil-M3 color mapping 4 palette.xlsx.",
            "   Choose a palette with data-m3x-palette on the html element, and a mode",
-           "   with data-m3x-theme (light, dark or system). No attribute = the base",
-           "   theme's own light colours. See m3-custom-theme.md, Step 4. */", ""]
+           "   with data-m3x-theme (light, dark or system). With no palette attribute,",
+           "   the colours are the Anvil colour preset chosen in the Theme editor.",
+           "   See m3-custom-theme.md, Step 4. */", ""]
     # Dark values are written twice (explicit dark, and "system" under the media
     # query) so that both selectors win over the palette's light block.
-    out.append("/* Base colours, dark */")
-    sel_none = ":root:not([data-m3x-palette])"
-    out.append(block(f'{sel_none}[data-m3x-theme="dark"]', base_dark, order))
-    out.append("@media (prefers-color-scheme: dark) {")
-    out.append(block(f'{sel_none}[data-m3x-theme="system"]', base_dark, order, "  "))
-    out.append("}\n")
-    for name, (light, dark) in schemes.items():
+    for name, modes in schemes.items():
         p = f'[data-m3x-palette="{name}"]'
         out.append(f"/* Palette: {name} */")
-        out.append(block(f":root{p}", light, order))
-        out.append(block(f':root{p}[data-m3x-theme="dark"]', dark, order))
+        out.append(block(f":root{p}", modes["light"]))
+        out.append(block(f':root{p}[data-m3x-theme="dark"]', modes["dark"]))
         out.append("@media (prefers-color-scheme: dark) {")
-        out.append(block(f':root{p}[data-m3x-theme="system"]', dark, order, "  "))
+        out.append(block(f':root{p}[data-m3x-theme="system"]', modes["dark"], "  "))
         out.append("}\n")
     out.append("/* Native form controls and scrollbars follow the mode */")
     out.append(':root[data-m3x-theme="dark"] { color-scheme: dark; }')
@@ -213,13 +315,60 @@ def emit(order, schemes, base_dark):
     return "\n".join(out) + "\n"
 
 
+def yaml_colours(colours, indent):
+    return [f"{indent}- {{color: '{colours[s]}', name: {s}}}" for s in ORDER]
+
+
+def emit_parameters(schemes, old_text):
+    """Replace the color_scheme section of parameters.yaml. The rest is kept."""
+    roles_at = old_text.index("\nroles:")
+    lines = ["color_scheme:", "  colors:"]
+    lines += yaml_colours(schemes["default"]["light"], "  ")
+    lines += ["  preset_groups:", "  - name: Colour Scheme", "    options:"]
+    for name, modes in schemes.items():
+        for mode in ("light", "dark"):
+            lines.append("    - colors:")
+            lines += yaml_colours(modes[mode], "      ")
+            lines.append(f"      name: {title(name, mode)}")
+    return "\n".join(lines) + old_text[roles_at:]
+
+
+def emit_presets(schemes):
+    keys = {}
+    for name, modes in schemes.items():
+        for mode in ("light", "dark"):
+            primary = modes[mode]["Primary"].upper()
+            if primary in keys:
+                raise SystemExit(f"Primary {primary} is not unique")
+            keys[primary] = (name, mode)
+    rows = "\n".join(f'    "{k}": ("{n}", "{m}"),' for k, (n, m) in keys.items())
+    return (
+        '"""Which Anvil colour preset belongs to which palette and mode.\n\n'
+        "Generated by tools/build_palettes.py in m3-custom-theme-project-library.\n"
+        "Do not edit by hand. Each preset is recognised by its Primary colour.\n"
+        '"""\n\n'
+        "PALETTES = (\n" + "".join(f'    "{n}",\n' for n in schemes) + ")\n\n"
+        "BY_PRIMARY = {\n" + rows + "\n}\n"
+    )
+
+
 if __name__ == "__main__":
     if len(sys.argv) != 3:
         raise SystemExit(__doc__)
-    order, schemes, base_dark, report = build(sys.argv[1])
-    with open(sys.argv[2], "w", newline="\n") as f:
-        f.write(emit(order, schemes, base_dark))
-    print(f"wrote {sys.argv[2]}")
+    app = Path(sys.argv[2])
+    schemes, report = build(sys.argv[1])
+    css = app / "theme/assets/m3x/palettes.css"
+    params = app / "theme/parameters.yaml"
+    presets = app / "client_code/_utils/m3x_presets.py"
+    params_text = params.read_text()
+    with open(css, "w", newline="\n") as f:
+        f.write(emit_css(schemes))
+    with open(params, "w", newline="\n") as f:
+        f.write(emit_parameters(schemes, params_text))
+    with open(presets, "w", newline="\n") as f:
+        f.write(emit_presets(schemes))
+    for path in (css, params, presets):
+        print(f"wrote {path}")
     print("Corrections (palette, slot, spreadsheet value, value used):")
     for row in report:
         print("  ", *row)

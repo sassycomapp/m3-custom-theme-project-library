@@ -34,7 +34,7 @@ The spreadsheet's overlay and disabled colours are exact formulas of the main co
 
 Reason: in the spreadsheet, **Surface Container** equals **Surface** in all four palettes, so the container ladder (Low, Container, High, Highest) had no step between Surface and Surface Container Low. The High and Highest values were also one step off, and two had the wrong tint (the calm_teal Highest is yellow-green and the sophisticated_purple Highest has no purple tint). All three slots were regenerated from each palette's key colour.
 
-**Primary Overlay 3** uses an opacity of 0.12 (the M3 state layer for focus and pressed) in place of the spreadsheet's 0.11.
+**Primary Overlay 3** uses an opacity of 0.12, the value the base theme uses for this slot, in place of the spreadsheet's 0.11.
 
 ## Kept as in the spreadsheet
 
