@@ -25,6 +25,7 @@ A Chip is a small, compact element that stands for an action, a choice, a piece 
 | States | Hover, focus and pressed layers in the label colour. Focus ring: 3 px Secondary, 2 px outside |
 | Disabled | Label and icons On Surface at 38 %. Outline, and elevated or selected containers, On Surface at 12 %. No shadow |
 | Touch target | 48 px high |
+| Outer margin | 8 px above and below, 4 px at the sides: room for the touch target, the shadow and the focus ring inside Anvil's containers |
 
 Sources: Jetpack Compose `AssistChipTokens`, `FilterChipTokens`, `InputChipTokens` and `SuggestionChipTokens` (7_0_1), and the M3 chips specification.
 
