@@ -66,7 +66,7 @@ These exist in the base. Each needs its M3 Expressive spec checked, and a varian
 | E4 | `Slider` | Expressive sizes and handle styles. |
 | E5 | Navigation layouts (`NavigationDrawerLayout`, `NavigationRailLayout`) | Expressive rail, and adaptive behaviour at all window size classes (F7). |
 | E6 | `Menu`, `DropdownMenu`, `MenuItem` | Refreshed Expressive menu guidance. |
-| E7 | `Card`, `InteractiveCard` | Check against the current spec during Step 7. |
+| E7 | `Card`, `InteractiveCard` | Check against the current spec during Step 6. |
 | E8 | `SidesheetContent` | The base has the content container for side sheets inside the layouts. Check against the side sheets spec. |
 
 ## 4. Not planned

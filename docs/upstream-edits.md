@@ -1,6 +1,6 @@
 # Edits to base (upstream v1.2.6) files
 
-Every change to a file that came from Anvil's theme is listed here, so upstream merges (Step 12) can be resolved. Format: file, change, reason, step.
+Every change to a file that came from Anvil's theme is listed here, so upstream merges (Step 11) can be resolved. Format: file, change, reason, step.
 
 | File | Change | Reason | Step |
 |---|---|---|---|
@@ -13,5 +13,5 @@ Every change to a file that came from Anvil's theme is listed here, so upstream 
 
 | Where | Issue | Why left |
 |---|---|---|
-| `theme/assets/theme.css`, `a.anvil-inlinable` | The rule reads `color: %color:Primary%%;` with a stray `%`, so the colour is invalid and ignored. | Fixing it changes the appearance of inline links in light mode. Decide with the link component in Step 7. |
+| `theme/assets/theme.css`, `a.anvil-inlinable` | The rule reads `color: %color:Primary%%;` with a stray `%`, so the colour is invalid and ignored. | Fixing it changes the appearance of inline links in light mode. Decide with the link component in Step 6. |
 | `theme/assets/theme.css`, `@property --PrimaryOverlay2` | Registered with a fixed colour but used nowhere. | Dead code. Harmless. |

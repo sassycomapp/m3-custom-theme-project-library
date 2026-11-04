@@ -67,7 +67,7 @@ Bring upstream v1.2.6 into the `m3-custom-theme` repo on a branch named `step1-b
 - keep the placeholder `Form1` as the startup form, and keep its entry in `.anvil_editor.yaml`; Step 3 turns it into the demo form;
 - keep `/.anvil/` in `.gitignore`.
 
-The `m3` dependency disappears from `anvil.yaml` by itself, because the app now *is* the `m3` package. The README is upstream's until we rewrite it at Step 11.
+The `m3` dependency disappears from `anvil.yaml` by itself, because the app now *is* the `m3` package. The README is upstream's until we rewrite it at Step 10.
 *Exit check:* the staged tree differs from the `upstream-v1.2.6` tree in exactly five files (`.anvil_editor.yaml`, `.gitignore`, `anvil.yaml`, `client_code/Form1/__init__.py`, `client_code/Form1/form_template.html`). The app opens in the Anvil editor, `Form1` runs, and the toolbox shows the same components as upstream v1.2.6. Tag the commit `base-v1.2.6`.
 
 **Step 2. Inventory the base.**
@@ -76,7 +76,7 @@ Write `docs/base-inventory.md` in the project library repo. Inventory the v1.2.6
 
 **Step 3. Build the demo and test app.**
 Turn `Form1` into the demo form. It is already the startup form. It shows every existing component in each variant and state, built in Python from one data table (`SECTIONS` in `client_code/Form1/__init__.py`), so adding a component later means adding one entry. Every property name and option value in the table is checked against the component's `form_template.yaml` before the file is delivered.
-Step 3 is done in two passes, both now written. Pass 3a covers the components that sit in a simple row: buttons, icon buttons, toggle icon buttons, checkbox, radio buttons (inside a `RadioGroupPanel`), switch, text box, text area, slider, avatar, link, headings, text, cards, progress indicators and dividers. Pass 3b adds `ButtonMenu`, `IconButtonMenu`, `AvatarMenu`, `MenuItem`, `DropdownMenu`, `FileLoader` and `NavigationLink`. The two navigation layouts and `SidesheetContent` cannot sit inside a form, so they get their own demo forms in Step 10, where we change them anyway.
+Step 3 is done in two passes, both now written. Pass 3a covers the components that sit in a simple row: buttons, icon buttons, toggle icon buttons, checkbox, radio buttons (inside a `RadioGroupPanel`), switch, text box, text area, slider, avatar, link, headings, text, cards, progress indicators and dividers. Pass 3b adds `ButtonMenu`, `IconButtonMenu`, `AvatarMenu`, `MenuItem`, `DropdownMenu`, `FileLoader` and `NavigationLink`. The two navigation layouts and `SidesheetContent` cannot sit inside a form, so they get their own demo forms in Step 9, where we change them anyway.
 Form1 is only changed by file, never in the Anvil design view. The demo form is built in code, so the design view cannot edit it.
 *Exit check:* Form1 runs in the Anvil editor, every section appears, and the console shows no errors. After Step 4 the same form also shows the light/dark switch.
 
@@ -93,35 +93,31 @@ What was built:
 *Exit check:* in each of the 10 combinations, every section of `Form1` is readable and nothing keeps its old colour (page background, text, buttons, text boxes, cards, menus, dropdown lists, progress indicators). Hover and pressed states are visibly correct on filled, tonal and elevated buttons. If a combination fails, the cause is recorded in `docs/lessons.md` before Step 5.
 
 **Step 5. Build the token layer.**
-Create `theme/assets/m3x/tokens.css` and import it from `theme.css`. Generate light and dark colour schemes with Material Theme Builder. Take typography, shape, elevation, state-layer and motion values from `material-tokens` and from m3.material.io. Motion tokens cover both the standard duration-and-easing set and the Expressive spring set (stiffness and damping ratio, with separate spatial and effects specs). The Expressive spatial springs are fast 800 / 0.6, default 380 / 0.8 and slow 200 / 0.8. The effects springs are fast 3800 / 1.0, default 1600 / 1.0 and slow 800 / 1.0. These values agree across the Flutter `motor` package, react-native-paper and other implementations. They are confirmed against Google's Jetpack Compose source before they are frozen. Map the colours into `parameters.yaml` (light) and into the dark block (Step 4).
-*Exit check:* every token category has variables, and a token reference page in the demo form shows them all in light and dark.
+Create `theme/assets/m3x/tokens.css` and import it from `theme.css`. The colour schemes are the palettes from Step 4. The token layer adds every M3 colour role the base lacks (Error Container, Inverse Primary, Surface Tint, Surface Dim, Surface Bright, Surface Container Lowest, Scrim, Shadow, and the Fixed and Fixed Dim roles for primary, secondary and tertiary) to every palette in light and dark, through `tools/build_palettes.py`. Take typography, shape, elevation, state-layer and motion values from `material-tokens` and from m3.material.io. The type scale includes the expressive (emphasised) styles, and the shape scale includes the full expanded set of corner sizes. Motion tokens cover both the standard duration-and-easing set and the Expressive spring set (stiffness and damping ratio, with separate spatial and effects specs). The Expressive spatial springs are fast 800 / 0.6, default 380 / 0.8 and slow 200 / 0.8. The effects springs are fast 3800 / 1.0, default 1600 / 1.0 and slow 800 / 1.0. These values agree across the Flutter `motor` package, react-native-paper and other implementations. They are confirmed against Google's Jetpack Compose source before they are frozen.
+*Exit check:* every token category has variables, and a token reference page in the demo form shows them all in light and dark and passes the Section 5.9 checks.
 
-**Step 6. Extend the foundations.**
-Add, in this order: the expanded surface-container levels, the expanded shape scale, the expressive type scale, state layers, and motion tokens (duration and easing).
-*Exit check:* each foundation appears on the token reference page and passes the Section 5.9 checks.
-
-**Step 7. Build the missing M3 components.**
+**Step 6. Build the missing M3 components.**
 Take the gaps from `docs/gap-list.md` in priority order. Use the Component Build Loop (4.1) for each one.
 
-**Step 8. Build the M3 Expressive components.**
+**Step 7. Build the M3 Expressive components.**
 Start with buttons and button groups, FABs, cards, expressive lists, navigation, progress indicators and snackbars. Use the Component Build Loop (4.1) for each one.
 
-**Step 9. Add motion.**
+**Step 8. Add motion.**
 Implement hover, press, focus, selection, loading and shape-morph transitions through the motion tokens from Step 5, in the helper module `client_code/_utils/m3x_motion.py` and in CSS. M3 Expressive motion is spring-based, not fixed-duration. The first task is to prove how springs are reproduced, trying these approaches in order and stopping at the first that works in the browsers we target: (1) a CSS `linear()` easing, generated by a small Python script (`tools/spring_to_linear.py` in the library repo) from the closed-form spring equation (mass 1, with stiffness and damping ratio from the tokens), with the animation duration set to the spring's settling time; (2) the Web Animations API, called from `m3x_motion.py` through `anvil.js`; (3) a small vendored JavaScript motion library (decision 7). The chosen approach is recorded in Section 3.2 before the rest of this step. Precedents: the Flutter `motor` package (`MaterialSpringMotion`), react-native-paper's motion tokens, and the web library `tankrap/m3x`, which drives its components with a spring solver of about 1 KB fed by the same tokens.
 *Exit check:* the motion rules in Section 5.6 pass, including reduced-motion behaviour.
 
-**Step 10. Add adaptive layouts.**
+**Step 9. Add adaptive layouts.**
 Extend the existing navigation layouts and add new ones for compact, medium and expanded widths, following the M3 adaptive layout specification.
 *Exit check:* each layout works at the three width classes in the demo form.
 
-**Step 11. Release.**
+**Step 10. Release.**
 Complete the release checklist in Section 5.10, update `CHANGELOG.md`, publish the version in Anvil and tag the same commit.
 *Exit check:* a test app (not a production app) switches its dependency to the new version and works unchanged.
 
-**Step 12. Maintain against upstream.**
+**Step 11. Maintain against upstream.**
 At each upstream release, fetch the `upstream` remote, merge into `upstream-sync`, resolve conflicts using the log in `docs/upstream-edits.md`, run the demo form, then merge into `master`.
 
-### 4.1 Component Build Loop (used in Steps 7 and 8)
+### 4.1 Component Build Loop (used in Steps 6 and 7)
 
 1. Read the component's page on m3.material.io. Record its anatomy, variants and states in `docs/components/<ComponentName>.md`.
 2. Define the API: property names, defaults, events. Use the same names that related components use.
@@ -152,7 +148,7 @@ At each upstream release, fetch the `upstream` remote, merge into `upstream-sync
 ### 5.3 Upstream files
 
 - The base files stay as they are unless a change is needed. Prefer extending or adding a variant in a new file.
-- Every edit to a base file is marked in the file with a `/* m3x: reason */` comment (or `# m3x: reason` in Python) and logged in `docs/upstream-edits.md` with the file name and the reason. This is what makes Step 12 merges manageable.
+- Every edit to a base file is marked in the file with a `/* m3x: reason */` comment (or `# m3x: reason` in Python) and logged in `docs/upstream-edits.md` with the file name and the reason. This is what makes Step 11 merges manageable.
 - Do not reformat or reorder base files. Formatting changes create merge conflicts.
 - Never edit the theme's own files through the Anvil editor. That means everything under `_Components`, `Layouts`, `_utils` and `theme`. The editor commits straight to `master` and writes the change into the base file (this happened once with a tooltip on `RadioButton`). Theme files are changed only in the repo files, by commit. The editor is used to run and look at `Form1`.
 
