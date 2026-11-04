@@ -5,7 +5,7 @@ Companion to `docs/base-inventory.md`. The foundation findings in Section 1 come
 ## 1. Foundation gaps (found in the base files)
 
 | # | Gap | Evidence in v1.2.6 |
-|---|---|---|
+|---|---|---|---|
 | F1 | No dark mode | One colour scheme. No `prefers-color-scheme` rule anywhere in `theme.css` or `anvil-m3/*.css`. |
 | F2 | Only colour tokens exist | `theme.css` defines 45 `--anvil-m3-*` variables, all colours. No typography, shape, elevation, state-layer or motion variables. |
 | F3 | Hardcoded shape values | Component CSS uses literal radii such as `4px`, `16px`, `100px`, `50%`. |
@@ -42,7 +42,7 @@ Priority 2:
 | C13 | Tooltips (plain, rich) | Partly | `Button` has a `tooltip` property. No rich tooltip. | To build |
 | C14 | Search (search bar, search view) | No | | To build |
 | C15 | Bottom sheets | No | | To build |
-| C16 | Loading indicator | No | New in Expressive. | To build |
+| C16 | Loading indicator | No | New in Expressive. | Built: `LoadingIndicator` |
 | C17 | Toolbars (docked, floating) | No | New in Expressive. | To build |
 | C18 | Split button | No | New in Expressive. | To build |
 | C19 | FAB menu | No | New in Expressive. | To build |
@@ -58,16 +58,16 @@ Priority 3:
 
 These exist in the base. Each needs its M3 Expressive spec checked, and a variant added where the spec changed. Done through the Component Build Loop (4.1 of `m3-custom-theme.md`), without changing the existing behaviour (rule 5.3).
 
-| # | Component | Expected update |
-|---|---|---|
-| E1 | `Button` | Sizes, round and square shapes, toggle behaviour. |
-| E2 | `IconButton`, `ToggleIconButton` | Sizes, shapes, shape change when selected. |
-| E3 | `LinearProgressIndicator`, `CircularProgressIndicator` | Wavy variants. |
-| E4 | `Slider` | Expressive sizes and handle styles. |
-| E5 | Navigation layouts (`NavigationDrawerLayout`, `NavigationRailLayout`) | Expressive rail, and adaptive behaviour at all window size classes (F7). |
-| E6 | `Menu`, `DropdownMenu`, `MenuItem` | Refreshed Expressive menu guidance. |
-| E7 | `Card`, `InteractiveCard` | Check against the current spec during Step 6. |
-| E8 | `SidesheetContent` | The base has the content container for side sheets inside the layouts. Check against the side sheets spec. |
+| # | Component | Expected update | Status |
+|---|---|---|---|
+| E1 | `Button` | Sizes, round and square shapes, toggle behaviour. | To build |
+| E2 | `IconButton`, `ToggleIconButton` | Sizes, shapes, shape change when selected. | To build |
+| E3 | `LinearProgressIndicator`, `CircularProgressIndicator` | Wavy variants. | Built: `wavy` property |
+| E4 | `Slider` | Expressive sizes and handle styles. | To build |
+| E5 | Navigation layouts (`NavigationDrawerLayout`, `NavigationRailLayout`) | Expressive rail, and adaptive behaviour at all window size classes (F7). | To build |
+| E6 | `Menu`, `DropdownMenu`, `MenuItem` | Refreshed Expressive menu guidance. | To build |
+| E7 | `Card`, `InteractiveCard` | Check against the current spec during Step 6. | To build |
+| E8 | `SidesheetContent` | The base has the content container for side sheets inside the layouts. Check against the side sheets spec. | To build |
 
 ## 4. Not planned
 
