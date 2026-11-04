@@ -122,7 +122,7 @@ At each upstream release, fetch the `upstream` remote, merge into `upstream-sync
 1. Read the component's page on m3.material.io. Record its anatomy, variants and states in `docs/components/<ComponentName>.md`.
 2. Define the API: property names, defaults, events. Use the same names that related components use.
 3. Create `client_code/_Components/<ComponentName>/` with `__init__.py` and `form_template.yaml`, following the pattern of an existing component such as `Button`.
-4. Create `theme/assets/m3x/<componentname>.css` and import it from `theme.css`.
+4. Create `theme/assets/m3x/<componentname>.css` and import it from `theme/assets/m3x/components.css`. Component tokens (`--m3x-<componentname>-*`) go in `tokens.css`.
 5. Export the component in `client_code/components/__init__.py`.
 6. Add a toolbox entry in `anvil.yaml` and its icons in `theme/assets/designer_icons/`.
 7. Add the component, in every variant and state, to the demo form.
@@ -167,7 +167,7 @@ At each upstream release, fetch the `upstream` remote, merge into `upstream-sync
 ### 5.5 CSS
 
 - Each component's CSS lives in its own file under `theme/assets/m3x/`. `theme.css` contains only `@import` lines, the variable blocks and the page-level base styles.
-- Every selector begins with `.m3x-`. No bare element selectors and no selectors that match existing Anvil classes.
+- Every selector begins with `.m3x-`, or with `.anvil-role-m3x-` where an m3x Role styles an Anvil element (Anvil names a Role's class `anvil-role-<role>`). No bare element selectors and no selectors that match existing Anvil classes alone.
 - Avoid `!important`. If an existing Anvil rule can only be beaten with `!important`, add a comment saying which rule and why.
 - Do not add global rules that change how existing components look.
 - Do not use fixed pixel widths for layout. Use relative units and the width classes in 5.7.
