@@ -28,8 +28,8 @@ Priority 1 (core components every business app needs):
 | C4 | Snackbar | No | | Built: `Snackbar` |
 | C5 | FAB and extended FAB | No | Expressive update applies. | Built: `FloatingActionButton` |
 | C6 | Lists and list items | No | Expressive refresh applies. | Built: `ListItem` |
-| C7 | App bars (top, bottom, search app bar) | Partly | The top app bar exists only as styling inside the two navigation layouts. On m3.material.io, bottom and search app bars are part of the App bars page. | To build |
-| C8 | Navigation bar (bottom) | No | Expressive update applies. | To build |
+| C7 | App bars (top, bottom, search app bar) | Partly | The top app bar exists only as styling inside the two navigation layouts. On m3.material.io, bottom and search app bars are part of the App bars page. | Top app bar built: `TopAppBar`. The bottom app bar is built with C17, the search app bar with C14. |
+| C8 | Navigation bar (bottom) | No | Expressive update applies. | Built: `NavigationBar` |
 | C9 | Button groups and segmented buttons | No | Both have pages on m3.material.io. Button groups are new in Expressive and replace the segmented button, so button groups are built first. | Built: `ButtonGroup` (connected and standard) |
 | C10 | Badges | No | | Built: `Badge` |
 
