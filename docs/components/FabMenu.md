@@ -26,7 +26,7 @@ Sources: Jetpack Compose `FabMenuBaselineTokens`, `FloatingActionButtonMenu` and
 - The stack is drawn on the page body, outside Anvil's containers (lesson 19), and follows the button when the page scrolls. With little room above the button, it opens below instead.
 - The page keeps the closed button's full size, so nothing moves when the button shrinks to the close button.
 - With `floating` True, the button sits 16 px from the bottom right corner of the window.
-- Keyboard: on the button, Up or Down opens the menu on the last or first action, or moves into a menu already open (lesson 21); Enter or Space opens it on the first action. In the menu, Up, Down, Home and End move between actions, Enter or Space chooses, Escape closes and returns to the button, and Tab closes.
+- Keyboard: on the button, Up or Down opens the menu on the last or first action, or moves into a menu already open (lesson 21); Enter or Space opens it on the first action. In the menu, Up, Down, Home and End move between actions, Enter or Space chooses, Tab closes. Escape closes the menu and returns to the button wherever the focus is.
 - The button has `aria-haspopup="menu"`, `aria-expanded` and the name in `label`; the actions have the role `menuitem`.
 
 ## 4. API

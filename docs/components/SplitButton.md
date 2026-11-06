@@ -34,7 +34,7 @@ Sources: Jetpack Compose `SplitButtonXSmallTokens`, `SplitButtonSmallTokens`, `S
 - A click on the trailing button opens the menu of `menu_items`; a second click closes it. With no `menu_items` the trailing button does nothing.
 - The menu is drawn on the page body, outside Anvil's containers (lesson 19), and follows the button when the page scrolls.
 - Choosing an option closes the menu and raises `item_click` with `item` (the option's text) and `index` (its position, from 0).
-- Keyboard: on the trailing button, Down or Up opens the menu on the first or last option. In the menu, Up, Down, Home and End move between options, Enter or Space chooses, Escape closes and returns to the trailing button, and Tab closes. A click outside closes the menu.
+- Keyboard: on the trailing button, Down or Up opens the menu on the first or last option. In the menu, Up, Down, Home and End move between options, Enter or Space chooses, Tab closes. Escape closes the menu and returns to the trailing button wherever the focus is. A click outside closes the menu.
 - The trailing button has `aria-haspopup="menu"` and `aria-expanded`; the options have the role `menuitem`.
 
 ## 4. API
