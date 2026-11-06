@@ -44,7 +44,7 @@ Priority 2:
 | C15 | Bottom sheets | No | | Built: `BottomSheet` (modal and standard) |
 | C16 | Loading indicator | No | New in Expressive. | Built: `LoadingIndicator` |
 | C17 | Toolbars (docked, floating) | No | New in Expressive. | Built: `Toolbar` (floating and docked, standard and vibrant) |
-| C18 | Split button | No | New in Expressive. | To build |
+| C18 | Split button | No | New in Expressive. | Built: `SplitButton` |
 | C19 | FAB menu | No | New in Expressive. | To build |
 
 Priority 3:
