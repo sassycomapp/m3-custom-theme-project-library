@@ -25,7 +25,7 @@ Sources: Jetpack Compose `TimePickerTokens` and the Compose `TimePicker` dial la
 
 ## 3. How it works
 
-- The field shows the time as 14:30 (24-hour clock, the default) or 2:30 PM (12-hour clock). Typing accepts forms such as 14:30, 1430, 9.15 and 2:30 pm.
+- The field shows the time as 14:30 (24-hour clock, the default) or 2:30 PM (12-hour clock). Its placeholder is an example in the same form, such as "e.g. 14:30". Typing accepts forms such as 14:30, 1430, 9.15 and 2:30 pm.
 - A typed time is read when the user presses Enter or leaves the field. A time that cannot be read puts the field into its error state and keeps the last good time. An empty field sets the time to None.
 - In the dialog, the user clicks or drags on the dial. Choosing the hour moves on to the minutes, as M3 sets. Clicking an hour or minute box chooses which one the dial sets. The dial also takes the arrow keys.
 - In typing mode the hour and minute boxes become text inputs; a value out of range turns the box's outline to the Error colour.

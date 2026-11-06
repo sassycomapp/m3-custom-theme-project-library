@@ -25,11 +25,12 @@ Sources: Jetpack Compose `DatePickerModalTokens` and the M3 date pickers specifi
 
 ## 3. How it works
 
-- The field shows the date in `format` (by default `%d/%m/%Y`, as in 18/11/2026), and its placeholder shows the pattern (DD/MM/YYYY).
-- A typed date is read when the user presses Enter or leaves the field. A date that cannot be read, or that lies outside `min_date` and `max_date`, puts the field into its error state with a message and keeps the last good date. An empty field sets the date to None.
-- The calendar opens on the chosen date, or on today. Choosing a day selects it; "OK" confirms the choice and raises `change`; "Cancel", Escape or a click outside closes the dialog without a change.
+- The field shows the date in `format` (by default `%d/%m/%Y`, as in 18/11/2026). Its placeholder is an example: today's date in that format, such as "e.g. 18/11/2026". An example is clear for every format, including formats with month names.
+- A typed date is read when the user presses Enter or leaves the field. A date that cannot be read, or that lies outside `min_date` and `max_date`, puts the field into its error state and keeps the last good date. The message gives the example and, when limits are set, the allowed range, such as "Enter a date like 06 Nov 2026. Choose from 06 Nov 2026 to 05 Jan 2027." An empty field sets the date to None.
+- The calendar opens on the chosen date, or on today. The previous and next month arrows move one month per click; held down, they keep moving, one month every 120 ms after a 400 ms pause. An arrow is disabled when the month it leads to has no allowed day. For large jumps, the month and year button opens the year list. Choosing a day selects it; "OK" confirms the choice and raises `change`; "Cancel", Escape or a click outside closes the dialog without a change.
 - In the calendar, the arrow keys move one day or one week, Page Up and Page Down move one month, and Enter chooses the focused day. Today carries `aria-current="date"` and the selected day `aria-selected="true"`.
-- The year list runs from `min_date` to `max_date`, or from 1900 to 2100 when they are not set.
+- The year list runs from `min_date` to `max_date`, or from 1900 to 2100 when they are not set. Choosing a year keeps the shown month inside the allowed range.
+- In typing mode, an empty field is not an error; a typed date is checked as in the field.
 - The month and day names are English. The week starts on Monday or Sunday (`week_starts_on`).
 
 ## 4. API
