@@ -51,7 +51,7 @@ Priority 3:
 
 | # | Component | In base? | Note | Status |
 |---|---|---|---|---|
-| C20 | Carousel | No | | To build |
+| C20 | Carousel | No | | Built: `Carousel` (multi-browse, hero, center-aligned hero, uncontained, full width) |
 | C21 | (merged into C7) | | The Bottom app bar is part of the App bars page. | |
 
 ## 3. Existing components that need an Expressive update
