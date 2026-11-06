@@ -10,14 +10,14 @@ A carousel shows a row of items, usually images, that the user moves through. Ea
 - **Hero**: one large item and one small item. Suits showcasing.
 - **Center-aligned hero**: one large item between two small items.
 - **Uncontained**: items of one width in a row that scrolls freely; the edge cuts the last item.
-- **Full width**: one item at a time, the carousel's full width (the M3 full-screen layout, horizontal).
+- **Full width**: one item at a time, filling the width inside the same 16 px padding as the other layouts (the M3 full-screen layout, horizontal).
 
 ## 2. Anatomy (M3 specification)
 
 | Part | Value |
 |---|---|
 | Item | Corner extra large (28 px), content cropped to the item and centred; Surface Container Highest behind the content |
-| Spacing | 8 px between items; 16 px padding at each end of contained layouts (none at the end of uncontained, none in full width) |
+| Spacing | 8 px between items; 16 px padding at each end of contained layouts (none at the end of uncontained) |
 | Small item | 56 px wide; 40 px in carousels narrower than 360 px |
 | Multi-browse | Large items as close as possible to `item_width` (default 186 px); the medium item half a large one (never less than a small one); together they fill the width exactly |
 | Hero | Large item fills the width less one small item and a gap |
