@@ -37,8 +37,8 @@ Priority 2:
 
 | # | Component | In base? | Note | Status |
 |---|---|---|---|---|
-| C11 | Date picker | No | The base toolbox offers Anvil's standard DatePicker. | To build |
-| C12 | Time picker | No | | To build |
+| C11 | Date picker | No | The base toolbox offers Anvil's standard DatePicker. | Built: `DatePicker` |
+| C12 | Time picker | No | | Built: `TimePicker` |
 | C13 | Tooltips (plain, rich) | Partly | `Button` has a `tooltip` property. No rich tooltip. | To build |
 | C14 | Search (search bar, search view) | No | | To build |
 | C15 | Bottom sheets | No | | To build |
