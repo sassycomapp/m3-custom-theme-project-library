@@ -7,7 +7,7 @@ Component `m3.SearchBar` (`client_code/_Components/SearchBar/`), CSS `theme/asse
 Search lets the user find content by typing. M3 defines two parts:
 
 - **Search bar**: a pill-shaped field with a search icon, a placeholder such as "Search recipes", and optional elements at its end, such as the user's avatar.
-- **Search view**: the list of suggestions that opens below the bar while the user types. On wide screens it drops down from the bar (docked). On screens narrower than 600 px it fills the screen (full screen), with a back arrow to close it.
+- **Search view**: the list of suggestions that opens below the bar while the user types. On wide screens it drops down from the bar (docked): it is drawn on the page body, outside Anvil's containers, placed under the bar at the bar's width, and reaches down to 16 px above the bottom of the window. A handle in its bottom right corner lets the user drag it shorter or taller. Changing the window between wide and phone width closes the view. On screens narrower than 600 px it fills the screen (full screen), with a back arrow to close it.
 
 ## 2. Anatomy (M3 specification)
 
