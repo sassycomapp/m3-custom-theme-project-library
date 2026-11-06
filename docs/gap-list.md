@@ -60,10 +60,10 @@ These exist in the base. Each needs its M3 Expressive spec checked, and a varian
 
 | # | Component | Expected update | Status |
 |---|---|---|---|
-| E1 | `Button` | Sizes, round and square shapes, toggle behaviour. | To build |
-| E2 | `IconButton`, `ToggleIconButton` | Sizes, shapes, shape change when selected. | To build |
+| E1 | `Button` | Sizes, round and square shapes, toggle behaviour. | Built: `size`, `shape`, `toggle`, `selected` |
+| E2 | `IconButton`, `ToggleIconButton` | Sizes, shapes, shape change when selected. | Built: `size`, `button_width`, `shape` |
 | E3 | `LinearProgressIndicator`, `CircularProgressIndicator` | Wavy variants. | Built: `wavy` property |
-| E4 | `Slider` | Expressive sizes and handle styles. | To build |
+| E4 | `Slider` | Expressive sizes and handle styles. | Built: `size`; the base handle already has the Expressive style |
 | E5 | Navigation layouts (`NavigationDrawerLayout`, `NavigationRailLayout`) | Expressive rail, and adaptive behaviour at all window size classes (F7). | To build |
 | E6 | `Menu`, `DropdownMenu`, `MenuItem` | Refreshed Expressive menu guidance. | To build |
 | E7 | `Card`, `InteractiveCard` | Check against the current spec during Step 6. | To build |
