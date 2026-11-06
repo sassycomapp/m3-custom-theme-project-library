@@ -41,7 +41,7 @@ Priority 2:
 | C12 | Time picker | No | | Built: `TimePicker` |
 | C13 | Tooltips (plain, rich) | Partly | `Button` has a `tooltip` property. No rich tooltip. | Built: plain tooltip is the base `tooltip` property; rich tooltip is `RichTooltip` |
 | C14 | Search (search bar, search view) | No | | Built: `SearchBar` (search bar with docked and full-screen search view) |
-| C15 | Bottom sheets | No | | To build |
+| C15 | Bottom sheets | No | | Built: `BottomSheet` (modal and standard) |
 | C16 | Loading indicator | No | New in Expressive. | Built: `LoadingIndicator` |
 | C17 | Toolbars (docked, floating) | No | New in Expressive. | To build |
 | C18 | Split button | No | New in Expressive. | To build |
