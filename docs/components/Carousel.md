@@ -29,7 +29,9 @@ Sources: Jetpack Compose `CarouselDefaults` and `Carousel` (Compose has no carou
 
 ## 3. How it works
 
-- The developer adds components to the carousel; each becomes an item. Anvil Images fill their item whatever their own height setting.
+- Pictures are added in one of two ways. The simplest is the `images` property: one picture per line, as an asset path such as `_/theme/photo.jpg` (a file uploaded to the app's Assets) or a web address; from code the list may also hold Media objects. The carousel makes an Image item for each. Alternatively, any component added to the carousel becomes an item.
+- Every Image item, however it was added, is set to `zoom_to_fill`: the picture is scaled, keeping its proportions, until it covers the item, and the overflow is cropped evenly from both sides. Pictures are never stretched. Anvil Images fill their item whatever their own height setting.
+- Recommended pictures: landscape JPG or WebP for photos, PNG for graphics; about 800 x 600 px for multi-browse and uncontained, about 1600 x 900 px for the hero and full-width layouts; the subject near the centre; files under about 300 KB.
 - `index` is the position of the first large item (the large item itself in the hero layouts). Changing it, or the user moving the carousel, raises `change`.
 - The user moves a contained carousel by dragging or swiping 48 px per item, by scrolling sideways with a trackpad or with Shift and the mouse wheel, or with the Left, Right, Home and End keys while the carousel has the keyboard focus. Up and down scrolling stays with the page.
 - An uncontained carousel scrolls freely with the same inputs.
@@ -44,6 +46,7 @@ Properties:
 
 | Name | Type | Default | Meaning |
 |---|---|---|---|
+| `images` | text[] | empty | Pictures to show, one per line (asset paths or web addresses). |
 | `layout` | enum | `'multi_browse'` | `multi_browse`, `hero`, `center_hero`, `uncontained` or `full_width`. |
 | `item_width` | number | `186` | The width large items aim for (multi-browse), or every item's width (uncontained). |
 | `item_height` | number | `220` | The items' height in pixels. |
@@ -63,7 +66,10 @@ Toolbox: Containers section.
 
 ## 5. Usage
 
+In the designer: set the carousel's `images` property to `_/theme/photo1.jpg`, `_/theme/photo2.jpg` and so on, one per line.
+
+In code:
+
 ```python
-for url in photo_urls:
-    self.carousel_1.add_component(Image(source=url, display_mode="zoom_to_fill"))
+self.carousel_1.images = [row["photo"] for row in app_tables.photos.search()]
 ```
