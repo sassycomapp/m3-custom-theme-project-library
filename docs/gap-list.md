@@ -28,7 +28,7 @@ Priority 1 (core components every business app needs):
 | C4 | Snackbar | No | | Built: `Snackbar` |
 | C5 | FAB and extended FAB | No | Expressive update applies. | Built: `FloatingActionButton` |
 | C6 | Lists and list items | No | Expressive refresh applies. | Built: `ListItem` |
-| C7 | App bars (top, bottom, search app bar) | Partly | The top app bar exists only as styling inside the two navigation layouts. On m3.material.io, bottom and search app bars are part of the App bars page. | Top app bar built: `TopAppBar`. The bottom app bar is built with C17, the search app bar with C14. |
+| C7 | App bars (top, bottom, search app bar) | Partly | The top app bar exists only as styling inside the two navigation layouts. On m3.material.io, bottom and search app bars are part of the App bars page. | Top app bar built: `TopAppBar`. The bottom app bar is the docked `Toolbar` (C17), which M3 Expressive uses in its place; the search app bar is `SearchBar` (C14). |
 | C8 | Navigation bar (bottom) | No | Expressive update applies. | Built: `NavigationBar` |
 | C9 | Button groups and segmented buttons | No | Both have pages on m3.material.io. Button groups are new in Expressive and replace the segmented button, so button groups are built first. | Built: `ButtonGroup` (connected and standard) |
 | C10 | Badges | No | | Built: `Badge` |
@@ -43,7 +43,7 @@ Priority 2:
 | C14 | Search (search bar, search view) | No | | Built: `SearchBar` (search bar with docked and full-screen search view) |
 | C15 | Bottom sheets | No | | Built: `BottomSheet` (modal and standard) |
 | C16 | Loading indicator | No | New in Expressive. | Built: `LoadingIndicator` |
-| C17 | Toolbars (docked, floating) | No | New in Expressive. | To build |
+| C17 | Toolbars (docked, floating) | No | New in Expressive. | Built: `Toolbar` (floating and docked, standard and vibrant) |
 | C18 | Split button | No | New in Expressive. | To build |
 | C19 | FAB menu | No | New in Expressive. | To build |
 
