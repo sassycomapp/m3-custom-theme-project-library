@@ -64,9 +64,9 @@ These exist in the base. Each needs its M3 Expressive spec checked, and a varian
 | E2 | `IconButton`, `ToggleIconButton` | Sizes, shapes, shape change when selected. | Built: `size`, `button_width`, `shape` |
 | E3 | `LinearProgressIndicator`, `CircularProgressIndicator` | Wavy variants. | Built: `wavy` property |
 | E4 | `Slider` | Expressive sizes and handle styles. | Built: `size`; the base handle already has the Expressive style |
-| E5 | Navigation layouts (`NavigationDrawerLayout`, `NavigationRailLayout`) | Expressive rail, and adaptive behaviour at all window size classes (F7). | To build |
-| E6 | `Menu`, `DropdownMenu`, `MenuItem` | Refreshed Expressive menu guidance. | To build |
-| E7 | `Card`, `InteractiveCard` | Check against the current spec during Step 6. | To build |
+| E5 | Navigation layouts (`NavigationDrawerLayout`, `NavigationRailLayout`) | Expressive rail, and adaptive behaviour at all window size classes (F7). | Built: Expressive rail (`rail_style`, `rail_expanded`); adaptive behaviour with Step 9 |
+| E6 | `Menu`, `DropdownMenu`, `MenuItem` | Refreshed Expressive menu guidance. | Built: `m3x_theming.set_menu_style`, `MenuItem.selected` |
+| E7 | `Card`, `InteractiveCard` | Check against the current spec during Step 6. | Checked: matches; disabled outlined border fixed |
 | E8 | `SidesheetContent` | The base has the content container for side sheets inside the layouts. Check against the side sheets spec. | To build |
 
 ## 4. Not planned
