@@ -32,3 +32,4 @@ Sources: Jetpack Compose `NavigationRailCollapsedTokens`, `NavigationRailExpande
 |---|---|---|---|
 | `rail_style` | enum | `'standard'` | `standard` (the base 80 px rail) or `expressive`. |
 | `rail_expanded` | boolean | `False` | True: an expressive rail is expanded. The menu button switches it. |
+| `rail_adaptive` | boolean | `False` | True: an expressive rail expands by itself on large and extra-large windows (1200 px and wider) and collapses on smaller ones (Step 9). The menu button still switches it until the window changes size class. |

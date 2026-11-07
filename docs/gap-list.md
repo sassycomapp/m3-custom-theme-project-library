@@ -67,7 +67,7 @@ These exist in the base. Each needs its M3 Expressive spec checked, and a varian
 | E5 | Navigation layouts (`NavigationDrawerLayout`, `NavigationRailLayout`) | Expressive rail, and adaptive behaviour at all window size classes (F7). | Built: Expressive rail (`rail_style`, `rail_expanded`); adaptive behaviour with Step 9 |
 | E6 | `Menu`, `DropdownMenu`, `MenuItem` | Refreshed Expressive menu guidance. | Built: `m3x_theming.set_menu_style`, `MenuItem.selected` |
 | E7 | `Card`, `InteractiveCard` | Check against the current spec during Step 6. | Checked: matches; disabled outlined border fixed |
-| E8 | `SidesheetContent` | The base has the content container for side sheets inside the layouts. Check against the side sheets spec. | To build |
+| E8 | `SidesheetContent` | The base has the content container for side sheets inside the layouts. Check against the side sheets spec. | Checked: padding, modal colour and corners, and motion fixed |
 
 ## 4. Not planned
 
