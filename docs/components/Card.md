@@ -14,6 +14,7 @@ The base cards were compared with the current M3 card tokens (Jetpack Compose `E
 | Outlined | Surface, 1 px Outline Variant, level 0; hover level 1; pressed level 0 | Same | Matches |
 | Hover and pressed state layers | On Surface at 8 % and 10 % | The base overlays, which follow the palette and the light or dark mode | Matches |
 | Disabled | Elevated: Surface, level 1, 38 %. Filled: Surface Variant, 38 %. Outlined: Outline at 12 %, 38 % | Elevated and filled match; outlined kept Outline Variant | Fixed: a disabled outlined card's border uses Outline |
+| Enabled by default | Every component is enabled unless told otherwise | `InteractiveCard.enabled` had no default, so a card created in code without `enabled=True` was disabled | Fixed: `enabled` defaults to True |
 
 ## 2. API
 
