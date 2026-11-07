@@ -28,4 +28,5 @@ Every change to a file that came from Anvil's theme is listed here, so upstream 
 | Where | Issue | Why left |
 |---|---|---|
 | `theme/assets/theme.css`, `a.anvil-inlinable` | The rule reads `color: %color:Primary%%;` with a stray `%`, so the colour is invalid and ignored. | Fixing it changes the appearance of inline links in light mode. Decide with the link component in Step 6. |
+| `theme/assets/anvil-m3/slider.css`, `.anvil-m3-slider-label-container` | The value label is placed with window coordinates but styled `position: absolute` on the page body, so on a scrolled page it appears above the visible window. | Fixed without editing the base file: `theme/assets/m3x/slider-expressive.css` sets `position: fixed` on the label (Step 7, E4). |
 | `theme/assets/theme.css`, `@property --PrimaryOverlay2` | Registered with a fixed colour but used nowhere. | Dead code. Harmless. |

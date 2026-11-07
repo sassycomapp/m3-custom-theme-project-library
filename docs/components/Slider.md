@@ -17,6 +17,7 @@ The base slider already has the M3 Expressive look at the extra-small size: a 16
 | xlarge | 96 px | 108 px | 28 px |
 
 - The ends of the track beside the handle keep 2 px corners. Markers stay centred on the track. The value label sits above the taller handle.
+- The value label is fixed to the window, so it shows above the handle on a scrolled page (a fix to the base slider, for all sizes).
 
 Sources: Jetpack Compose `SliderTokens` (extra small) and the M3 sliders specification (the larger sizes).
 
