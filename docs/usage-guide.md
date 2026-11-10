@@ -18,7 +18,7 @@ A new app starts from a blank Anvil app with the same dependency.
 
 ## 2. Colours: palette and light or dark mode
 
-The theme has five palettes, each with a light and a dark scheme: `default`, `professional_blue`, `warm_coral`, `calm_teal` and `sophisticated_purple`. The colour preset chosen in Anvil's Theme editor sets the app's starting palette and mode; there is one preset per palette and mode.
+The theme has eight palettes, each with a light and a dark scheme: `default`, `professional_blue`, `warm_coral`, `calm_teal`, `sophisticated_purple`, `sky_blue`, `forest_green` and `desert_rose`. The colour preset chosen in Anvil's Theme editor sets the app's starting palette and mode; there is one preset per palette and mode. A new app starts on `professional_blue` light.
 
 An app can change them at start-up, for example from a per-client setting, and can offer them to the user:
 
