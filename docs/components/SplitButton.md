@@ -1,6 +1,6 @@
 # SplitButton
 
-Component `m3.SplitButton` (`client_code/_Components/SplitButton/`), CSS `theme/assets/m3x/split-button.css`, tokens `--m3x-split-*` in `theme/assets/m3x/tokens.css` and per size in `split-button.css`. Gap C18.
+Component `m3.SplitButton` (`client_code/_Components/SplitButton/`), CSS `theme/assets/m3x/split-button.css`, tokens `--m3x-split-*` in `theme/assets/m3x/tokens.css` and per size in `split-button.css`.
 
 ## 1. What it is
 

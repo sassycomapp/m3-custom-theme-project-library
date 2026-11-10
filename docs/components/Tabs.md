@@ -1,6 +1,6 @@
 # Tabs
 
-Component `m3.Tabs` (`client_code/_Components/Tabs/`), CSS `theme/assets/m3x/tabs.css`, tokens `--m3x-tabs-*` in `theme/assets/m3x/tokens.css`. Gap C3.
+Component `m3.Tabs` (`client_code/_Components/Tabs/`), CSS `theme/assets/m3x/tabs.css`, tokens `--m3x-tabs-*` in `theme/assets/m3x/tokens.css`.
 
 ## 1. What it is
 

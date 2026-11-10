@@ -1,6 +1,6 @@
 # Snackbar
 
-Class `m3.Snackbar` (`client_code/_utils/m3x_snackbar.py`), CSS `theme/assets/m3x/snackbar.css`, tokens `--m3x-snackbar-*` in `theme/assets/m3x/tokens.css`. Gap C4.
+Class `m3.Snackbar` (`client_code/_utils/m3x_snackbar.py`), CSS `theme/assets/m3x/snackbar.css`, tokens `--m3x-snackbar-*` in `theme/assets/m3x/tokens.css`.
 
 ## 1. What it is
 

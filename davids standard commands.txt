@@ -1,4 +1,0 @@
-New standard commit-all: 
-gcp "short description of the change"
-
-

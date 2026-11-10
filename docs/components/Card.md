@@ -1,6 +1,6 @@
 # Card and InteractiveCard (check against the M3 specification)
 
-Base components `m3.Card` and `m3.InteractiveCard`. CSS fix `theme/assets/m3x/card-fixes.css`. Gap E7.
+Base components `m3.Card` and `m3.InteractiveCard`. CSS fix `theme/assets/m3x/card-fixes.css`.
 
 ## 1. Result of the check
 

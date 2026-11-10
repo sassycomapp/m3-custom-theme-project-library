@@ -1,6 +1,6 @@
 # NavigationBar
 
-Component `m3.NavigationBar` (`client_code/_Components/NavigationBar/`), CSS `theme/assets/m3x/navigation-bar.css`, tokens `--m3x-navigation-bar-*` in `theme/assets/m3x/tokens.css`. Gap C8.
+Component `m3.NavigationBar` (`client_code/_Components/NavigationBar/`), CSS `theme/assets/m3x/navigation-bar.css`, tokens `--m3x-navigation-bar-*` in `theme/assets/m3x/tokens.css`.
 
 ## 1. What it is
 

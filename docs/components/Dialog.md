@@ -1,6 +1,6 @@
 # Dialog
 
-Component `m3.Dialog` (`client_code/_Components/Dialog/`), CSS `theme/assets/m3x/dialog.css`, tokens `--m3x-dialog-*` in `theme/assets/m3x/tokens.css`. Gap C1.
+Component `m3.Dialog` (`client_code/_Components/Dialog/`), CSS `theme/assets/m3x/dialog.css`, tokens `--m3x-dialog-*` in `theme/assets/m3x/tokens.css`.
 
 ## 1. What it is
 

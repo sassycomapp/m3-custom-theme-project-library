@@ -1,6 +1,6 @@
 # LoadingIndicator
 
-Component `m3.LoadingIndicator` (`client_code/_Components/LoadingIndicator/`), shapes `client_code/_utils/m3x_loading.py`, CSS `theme/assets/m3x/loading-indicator.css`, tokens `--m3x-loading-indicator-*` in `theme/assets/m3x/tokens.css`. Gap C16.
+Component `m3.LoadingIndicator` (`client_code/_Components/LoadingIndicator/`), shapes `client_code/_utils/m3x_loading.py`, CSS `theme/assets/m3x/loading-indicator.css`, tokens `--m3x-loading-indicator-*` in `theme/assets/m3x/tokens.css`.
 
 ## 1. What it is
 
@@ -28,7 +28,7 @@ Sources: Jetpack Compose `LoadingIndicatorTokens` and the Compose `LoadingIndica
 
 - Each of the seven shapes is drawn with the same number of points round its centre, so the browser can morph one shape smoothly into the next with SVG animation. No JavaScript library is needed.
 - One loop passes four times through the seven shapes: 28 quarter turns, which is seven whole turns. The loop therefore restarts without a visible jump.
-- Each morph eases in and out, close to the spring Compose uses. The exact spring follows with the motion work (Step 8).
+- Each morph eases in and out, close to the spring Compose uses.
 - With the device's reduced-motion setting on, the indicator shows the first shape, still.
 - The indicator is announced to screen readers as a progress bar named by `label`.
 

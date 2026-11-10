@@ -1,6 +1,6 @@
 # Wavy progress indicators
 
-The `wavy` property of `m3.LinearProgressIndicator` and `m3.CircularProgressIndicator`. Drawing code `client_code/_utils/m3x_wavy.py`, CSS `theme/assets/m3x/wavy-progress.css`, tokens `--m3x-progress-*` in `theme/assets/m3x/tokens.css`. Gap E3.
+The `wavy` property of `m3.LinearProgressIndicator` and `m3.CircularProgressIndicator`. Drawing code `client_code/_utils/m3x_wavy.py`, CSS `theme/assets/m3x/wavy-progress.css`, tokens `--m3x-progress-*` in `theme/assets/m3x/tokens.css`.
 
 ## 1. What it is
 

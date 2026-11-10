@@ -1,6 +1,6 @@
 # TopAppBar
 
-Component `m3.TopAppBar` (`client_code/_Components/TopAppBar/`), CSS `theme/assets/m3x/top-app-bar.css`, tokens `--m3x-top-app-bar-*` in `theme/assets/m3x/tokens.css`. Gap C7 (top app bar). The bottom app bar of gap C7 is the docked toolbar of gap C17, and the search app bar is part of gap C14.
+Component `m3.TopAppBar` (`client_code/_Components/TopAppBar/`), CSS `theme/assets/m3x/top-app-bar.css`, tokens `--m3x-top-app-bar-*` in `theme/assets/m3x/tokens.css`. The M3 bottom app bar is the docked toolbar (`Toolbar.md`), and the search app bar is part of the SearchBar (`SearchBar.md`).
 
 ## 1. What it is
 

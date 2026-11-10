@@ -1,6 +1,6 @@
 # DatePicker
 
-Component `m3.DatePicker` (`client_code/_Components/DatePicker/`), shared field code `client_code/_utils/m3x_picker.py`, CSS `theme/assets/m3x/date-picker.css`, tokens `--m3x-date-picker-*` in `theme/assets/m3x/tokens.css`. Gap C11.
+Component `m3.DatePicker` (`client_code/_Components/DatePicker/`), shared field code `client_code/_utils/m3x_picker.py`, CSS `theme/assets/m3x/date-picker.css`, tokens `--m3x-date-picker-*` in `theme/assets/m3x/tokens.css`.
 
 ## 1. What it is
 

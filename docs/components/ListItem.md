@@ -1,6 +1,6 @@
 # ListItem
 
-Component `m3.ListItem` (`client_code/_Components/ListItem/`), CSS `theme/assets/m3x/list-item.css`, tokens `--m3x-list-item-*` in `theme/assets/m3x/tokens.css`. Gap C6.
+Component `m3.ListItem` (`client_code/_Components/ListItem/`), CSS `theme/assets/m3x/list-item.css`, tokens `--m3x-list-item-*` in `theme/assets/m3x/tokens.css`.
 
 ## 1. What it is
 

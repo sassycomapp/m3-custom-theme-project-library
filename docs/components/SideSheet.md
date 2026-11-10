@@ -1,6 +1,6 @@
 # Side sheet (check against the M3 specification)
 
-The base side sheet inside `NavigationRailLayout` and `NavigationDrawerLayout`, with its content component `m3.SidesheetContent`. CSS fixes `theme/assets/m3x/sidesheet-fixes.css`, tokens `--m3x-sidesheet-*`. Gap E8.
+The base side sheet inside `NavigationRailLayout` and `NavigationDrawerLayout`, with its content component `m3.SidesheetContent`. CSS fixes `theme/assets/m3x/sidesheet-fixes.css`, tokens `--m3x-sidesheet-*`.
 
 ## 1. Result of the check
 

@@ -1,6 +1,6 @@
 # SearchBar
 
-Component `m3.SearchBar` (`client_code/_Components/SearchBar/`), CSS `theme/assets/m3x/search.css`, tokens `--m3x-search-*` in `theme/assets/m3x/tokens.css`. Gap C14.
+Component `m3.SearchBar` (`client_code/_Components/SearchBar/`), CSS `theme/assets/m3x/search.css`, tokens `--m3x-search-*` in `theme/assets/m3x/tokens.css`.
 
 ## 1. What it is
 

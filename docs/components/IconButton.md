@@ -1,6 +1,6 @@
 # IconButton and ToggleIconButton (M3 Expressive)
 
-Base components `m3.IconButton` and `m3.ToggleIconButton`, extended by m3x with the properties `size`, `button_width` and `shape`. CSS `theme/assets/m3x/iconbutton-expressive.css`. Gap E2. The base edits are listed in `docs/upstream-edits.md`.
+Base components `m3.IconButton` and `m3.ToggleIconButton`, extended by m3x with the properties `size`, `button_width` and `shape`. CSS `theme/assets/m3x/iconbutton-expressive.css`. The base edits are listed in `docs/upstream-edits.md`.
 
 ## 1. What it is
 

@@ -1,6 +1,6 @@
 # Motion
 
-Tokens in `theme/assets/m3x/tokens.css`; generator `tools/spring_to_linear.py`; Python helper `client_code/_utils/m3x_motion.py`. Step 8.
+Tokens in `theme/assets/m3x/tokens.css`; generator `tools/spring_to_linear.py`; Python helper `client_code/_utils/m3x_motion.py`.
 
 ## 1. What it is
 

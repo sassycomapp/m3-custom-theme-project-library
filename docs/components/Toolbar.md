@@ -1,6 +1,6 @@
 # Toolbar
 
-Component `m3.Toolbar` (`client_code/_Components/Toolbar/`), CSS `theme/assets/m3x/toolbar.css`, tokens `--m3x-toolbar-*` in `theme/assets/m3x/tokens.css`. Gap C17; also covers the bottom app bar part of C7.
+Component `m3.Toolbar` (`client_code/_Components/Toolbar/`), CSS `theme/assets/m3x/toolbar.css`, tokens `--m3x-toolbar-*` in `theme/assets/m3x/tokens.css`. The docked toolbar is also the M3 bottom app bar.
 
 ## 1. What it is
 

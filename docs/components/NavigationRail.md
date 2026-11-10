@@ -1,6 +1,6 @@
 # NavigationRailLayout (M3 Expressive rail)
 
-Base layout `m3.NavigationRailLayout`, extended by m3x with the properties `rail_style` and `rail_expanded`. CSS `theme/assets/m3x/navigation-rail.css`, tokens `--m3x-rail-*` in `theme/assets/m3x/tokens.css`. Gap E5. The base edits are listed in `docs/upstream-edits.md`.
+Base layout `m3.NavigationRailLayout`, extended by m3x with the properties `rail_style` and `rail_expanded`. CSS `theme/assets/m3x/navigation-rail.css`, tokens `--m3x-rail-*` in `theme/assets/m3x/tokens.css`. The base edits are listed in `docs/upstream-edits.md`.
 
 ## 1. What it is
 
@@ -32,4 +32,4 @@ Sources: Jetpack Compose `NavigationRailCollapsedTokens`, `NavigationRailExpande
 |---|---|---|---|
 | `rail_style` | enum | `'standard'` | `standard` (the base 80 px rail) or `expressive`. |
 | `rail_expanded` | boolean | `False` | True: an expressive rail is expanded. The menu button switches it. |
-| `rail_adaptive` | boolean | `False` | True: an expressive rail expands by itself on large and extra-large windows (1200 px and wider) and collapses on smaller ones (Step 9). The menu button still switches it until the window changes size class. |
+| `rail_adaptive` | boolean | `False` | True: an expressive rail expands by itself on large and extra-large windows (1200 px and wider) and collapses on smaller ones. The menu button still switches it until the window changes size class. |

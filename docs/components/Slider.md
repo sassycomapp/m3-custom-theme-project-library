@@ -1,6 +1,6 @@
 # Slider (M3 Expressive)
 
-Base component `m3.Slider`, extended by m3x with the property `size`. CSS `theme/assets/m3x/slider-expressive.css`. Gap E4. The base edits are listed in `docs/upstream-edits.md`.
+Base component `m3.Slider`, extended by m3x with the property `size`. CSS `theme/assets/m3x/slider-expressive.css`. The base edits are listed in `docs/upstream-edits.md`.
 
 ## 1. What it is
 

@@ -1,6 +1,6 @@
 # Chip
 
-Component `m3.Chip` (`client_code/_Components/Chip/`), CSS `theme/assets/m3x/chip.css`, tokens `--m3x-chip-*` in `theme/assets/m3x/tokens.css`. Gap C2.
+Component `m3.Chip` (`client_code/_Components/Chip/`), CSS `theme/assets/m3x/chip.css`, tokens `--m3x-chip-*` in `theme/assets/m3x/tokens.css`.
 
 ## 1. What it is
 

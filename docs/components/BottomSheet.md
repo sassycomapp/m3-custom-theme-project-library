@@ -1,6 +1,6 @@
 # BottomSheet
 
-Component `m3.BottomSheet` (`client_code/_Components/BottomSheet/`), CSS `theme/assets/m3x/bottom-sheet.css`, tokens `--m3x-bottom-sheet-*` in `theme/assets/m3x/tokens.css`. Gap C15.
+Component `m3.BottomSheet` (`client_code/_Components/BottomSheet/`), CSS `theme/assets/m3x/bottom-sheet.css`, tokens `--m3x-bottom-sheet-*` in `theme/assets/m3x/tokens.css`.
 
 ## 1. What it is
 

@@ -1,6 +1,6 @@
 # Tooltips
 
-Plain tooltip: the `tooltip` property of the base theme's components (CSS `.anvil-m3-tooltip` in `theme.css`). Rich tooltip: class `m3.RichTooltip` (`client_code/_utils/m3x_tooltip.py`), CSS `theme/assets/m3x/rich-tooltip.css`, tokens `--m3x-rich-tooltip-*` in `theme/assets/m3x/tokens.css`. Gap C13.
+Plain tooltip: the `tooltip` property of the base theme's components (CSS `.anvil-m3-tooltip` in `theme.css`). Rich tooltip: class `m3.RichTooltip` (`client_code/_utils/m3x_tooltip.py`), CSS `theme/assets/m3x/rich-tooltip.css`, tokens `--m3x-rich-tooltip-*` in `theme/assets/m3x/tokens.css`.
 
 ## 1. What it is
 

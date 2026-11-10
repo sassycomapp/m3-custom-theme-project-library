@@ -1,6 +1,6 @@
 # Carousel
 
-Component `m3.Carousel` (`client_code/_Components/Carousel/`), CSS `theme/assets/m3x/carousel.css`, tokens `--m3x-carousel-*` in `theme/assets/m3x/tokens.css`. Gap C20.
+Component `m3.Carousel` (`client_code/_Components/Carousel/`), CSS `theme/assets/m3x/carousel.css`, tokens `--m3x-carousel-*` in `theme/assets/m3x/tokens.css`.
 
 ## 1. What it is
 

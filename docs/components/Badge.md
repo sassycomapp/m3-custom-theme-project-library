@@ -1,6 +1,6 @@
 # Badge
 
-Component `m3.Badge` (`client_code/_Components/Badge/`), CSS `theme/assets/m3x/badge.css`, tokens `--m3x-badge-*` in `theme/assets/m3x/tokens.css`. Gap C10.
+Component `m3.Badge` (`client_code/_Components/Badge/`), CSS `theme/assets/m3x/badge.css`, tokens `--m3x-badge-*` in `theme/assets/m3x/tokens.css`.
 
 ## 1. What it is
 

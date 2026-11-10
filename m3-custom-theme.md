@@ -1,18 +1,20 @@
-# Build a full, general-purpose M3 / M3 Expressive theme for Anvil
+# m3-custom-theme: reference
 
-## 1. Objective
+## 1. What the theme is
 
-Build a custom Material 3 theme for Anvil, based on Anvil's official M3 theme (`anvil-works/material-3-theme`, version v1.2.6). The theme:
+m3-custom-theme is a full Material 3 (M3) and M3 Expressive theme for Anvil, built on Anvil's official M3 theme (`anvil-works/material-3-theme`, version v1.2.6). The theme:
 
-- keeps everything Anvil's theme already does;
+- keeps everything Anvil's theme does;
 - adds the M3 components Anvil's theme is missing;
 - adds M3 Expressive components, shapes, typography and motion;
-- supports light and dark schemes;
-- is published as an Anvil dependency app that our own apps (for example `mb-3-cs-app1`) depend on.
+- has eight colour palettes, each in light and dark;
+- is an Anvil dependency app that other apps (for example `mb-3-cs-app1`) depend on.
 
-This document covers **how the theme is built**: the workflow (Section 4) and the rules we follow while building it (Section 5). How apps use the finished theme is documented separately, after release.
+This document says how the theme is built and maintained. How an app uses the theme is in `docs/usage-guide.md`. Each component's specification is in `docs/components/`.
 
-## 2. Resources and what each is used for
+The theme lives in two repos: `m3-custom-theme` (the Anvil app) and `m3-custom-theme-project-library` (this document, the usage guide, the component specifications, the record of edits to base files and the build tools).
+
+## 2. Resources
 
 | Resource | Used for |
 |---|---|
@@ -21,104 +23,31 @@ This document covers **how the theme is built**: the workflow (Section 4) and th
 | https://github.com/material-foundation/material-theme-builder | The tool and documentation for generating light and dark colour schemes from a source colour and exporting them. |
 | https://m3.material.io/ | The specification for component anatomy, variants, states, motion, adaptive layout and M3 Expressive. The source of truth. |
 
-Local reference copies are in the `m3-custom-theme-project-library` repo: `material-3-theme-master.zip`, `material-theme-builder-main.zip`, and a saved copy of the M3 site page. The two zip files are snapshots of each repo's main branch. `material-3-theme-master.zip` is newer than v1.2.6 and differs from it (for example, it contains a `virtualize` module).
+## 3. Fixed decisions
 
-## 3. Starting point and fixed decisions
-
-### 3.1 What exists today (checked 2 Nov 2026)
-
-- The `m3-custom-theme` repo is a **plain Anvil app that depends on Anvil's M3 theme v1.2.6**. It is not yet a fork. Its `theme/assets/theme.css` is empty and it holds one placeholder form, `Form1`.
-- Anvil's M3 theme has this structure:
-  - `client_code/_Components/` for components (a Python `__init__.py` plus a `form_template.yaml` per component);
-  - `client_code/Layouts/` for `NavigationDrawerLayout` and `NavigationRailLayout`;
-  - `client_code/_utils/properties.py` for shared property helpers;
-  - `client_code/components/__init__.py`, which exports every component for `import m3.components as m3`;
-  - `client_code/InitModule.py`, which registers M3 replacements for the standard Anvil components;
-  - `theme/assets/theme.css`, which imports the per-component CSS files in `theme/assets/anvil-m3/`;
-  - `theme/parameters.yaml`, which holds the colour scheme (about 45 named colours) and the Roles;
-  - `anvil.yaml`, which holds the package name `m3`, the toolbox sections, and the font and floating-ui `head_html`.
-- Colours reach the CSS as `%color:Primary%`-style tokens, assigned in `theme.css` to variables named `--anvil-m3-*`.
-- Gaps we know about: the base has **one colour scheme and no dark-mode mechanism**, it uses `!important` in places, and its component set is smaller than the full M3 list.
-
-### 3.2 Fixed decisions
-
-Change these only by editing this section.
-
-1. **Package name stays `m3`.** Our apps then switch from Anvil's theme to ours by changing the dependency, with no code changes. Our theme replaces Anvil's theme in an app. It is never used alongside it.
+1. **Package name stays `m3`.** Apps switch from Anvil's theme to ours by changing the dependency, with no code changes. The theme replaces Anvil's theme in an app. It is never used alongside it.
 2. **New code uses the prefix `m3x`**: CSS classes `m3x-*`, CSS variables `--m3x-*`, Roles `m3x-*`, Python helper modules `m3x_*`. Inherited `anvil-m3-*` names are left as they are.
-3. **Upstream is tracked through a git remote named `upstream`**, with tag fetching switched off after the baseline is set. This stops upstream tags from colliding with ours.
-4. **Our release tags start at `v2.0.0`**, a version line clearly separate from upstream's `v1.x`. The first release also confirms that Anvil lists our tags as selectable dependency versions.
+3. **Upstream is tracked through a git remote named `upstream`**, with tag fetching switched off after the baseline is set. This stops upstream tags from colliding with the theme's tags.
+4. **One version, `v2.0.0`.** The tag `v2.0.0` sits on the released commit, a version line clearly separate from upstream's `v1.x`. Every release moves the tag to the new commit, so every app that depends on `v2.0.0` has the current theme.
 5. **Branches**: `master` is the working branch and is always releasable, because the Anvil editor reads and commits to `master` only. All work is committed to `master`. Only upstream merges use their own branch, `upstream-sync`. After any edit made in the Anvil editor, run `git pull` before the next commit.
-6. **Licence**: keep Anvil's MIT notice in `LICENSE` and add our own copyright line beneath it.
-7. **JavaScript policy.** Anvil supports JavaScript (script tags in `head_html`, files in theme assets, and the `anvil.js` bridge from Python), and the base already ships a JavaScript library this way (floating-ui). We use it only where CSS and Python cannot do the job. Any JavaScript file is vendored into `theme/assets/m3x/js/`, version-pinned, and loaded through `head_html` in `anvil.yaml`. No JavaScript is loaded from a CDN at runtime. The base theme loads its fonts from Google Fonts, and that stays as it is until a separate decision is made. We never load or replace the jQuery or Bootstrap that Anvil already provides.
-8. **Springs are reproduced with the CSS `linear()` easing** (Step 8, approach 1 of 3). `tools/spring_to_linear.py` solves each spring token (mass 1, stiffness and damping ratio) and writes its curve, 32 points, and its settling time (within 0.1 % of the target) into a generated block in `tokens.css`. Components use six alias tokens (`--m3x-motion-spatial-*` and `--m3x-motion-effects-*`, each fast, default or slow), which point at the expressive springs by default, at the standard springs when `m3x_motion.set_scheme("standard")` is called, and at the standard cubic-bezier easings in browsers without `linear()`. Python animations use the same springs through `m3x_motion.animate`. Approaches 2 and 3 were not needed.
+6. **Licence**: keep Anvil's MIT notice in `LICENSE` and add the theme's own copyright line beneath it.
+7. **JavaScript policy.** Anvil supports JavaScript (script tags in `head_html`, files in theme assets, and the `anvil.js` bridge from Python), and the base already ships a JavaScript library this way (floating-ui). It is used only where CSS and Python cannot do the job. Any JavaScript file is vendored into `theme/assets/m3x/js/`, version-pinned, and loaded through `head_html` in `anvil.yaml`. No JavaScript is loaded from a CDN at runtime. The base theme loads its fonts from Google Fonts, and that stays as it is until a separate decision is made. The theme never loads or replaces the jQuery or Bootstrap that Anvil already provides.
+8. **Springs are reproduced with the CSS `linear()` easing.** `tools/spring_to_linear.py` solves each spring token (mass 1, stiffness and damping ratio) and writes its curve, 32 points, and its settling time (within 0.1 % of the target) into a generated block in `tokens.css`. Components use six alias tokens (`--m3x-motion-spatial-*` and `--m3x-motion-effects-*`, each fast, default or slow), which point at the expressive springs by default, at the standard springs when `m3x_motion.set_scheme("standard")` is called, and at the standard cubic-bezier easings in browsers without `linear()`. Python animations use the same springs through `m3x_motion.animate`.
 
-## 4. Build workflow
+## 4. Colours
 
-Each step has an exit check. Do not start the next step until the check passes.
-
-**Step 1. Establish the base.**
-Bring upstream v1.2.6 into the `m3-custom-theme` repo on a branch named `step1-base`:
-- add the `upstream` remote and fetch the v1.2.6 tag under the local name `upstream-v1.2.6`;
-- record it as a merge base with an empty "ours" merge, so later upstream merges have a common ancestor;
-- replace the working tree with the v1.2.6 tree;
-- remove `LICENSE.txt` (upstream's file is `LICENSE`);
-- set `name: m3-custom-theme` in `anvil.yaml`;
-- replace the startup module `_TestForms.ButtonMenuFUI`, which does not exist in the public repo, with `startup_form: Form1`;
-- keep the placeholder `Form1` as the startup form, and keep its entry in `.anvil_editor.yaml`; Step 3 turns it into the demo form;
-- keep `/.anvil/` in `.gitignore`.
-
-The `m3` dependency disappears from `anvil.yaml` by itself, because the app now *is* the `m3` package. The README is upstream's until we rewrite it at Step 10.
-*Exit check:* the staged tree differs from the `upstream-v1.2.6` tree in exactly five files (`.anvil_editor.yaml`, `.gitignore`, `anvil.yaml`, `client_code/Form1/__init__.py`, `client_code/Form1/form_template.html`). The app opens in the Anvil editor, `Form1` runs, and the toolbox shows the same components as upstream v1.2.6. Tag the commit `base-v1.2.6`.
-
-**Step 2. Inventory the base.**
-Write `docs/base-inventory.md` in the project library repo. Inventory the v1.2.6 tree (tag `upstream-v1.2.6`), not the zip file, which is newer. It lists every component with its properties and events, every layout, every CSS file in `theme/assets/anvil-m3/`, the colour names in `parameters.yaml`, the Roles, and the helpers in `_utils/properties.py`. Then write `docs/gap-list.md`, comparing the inventory against the full component list on m3.material.io. Each gap gets a priority.
-*Exit check:* both files exist and every component in the base appears in the inventory.
-
-**Step 3. Build the demo and test app.**
-Turn `Form1` into the demo form. It is already the startup form. It shows every existing component in each variant and state, built in Python from one data table (`SECTIONS` in `client_code/Form1/__init__.py`), so adding a component later means adding one entry. Every property name and option value in the table is checked against the component's `form_template.yaml` before the file is delivered.
-Step 3 is done in two passes, both now written. Pass 3a covers the components that sit in a simple row: buttons, icon buttons, toggle icon buttons, checkbox, radio buttons (inside a `RadioGroupPanel`), switch, text box, text area, slider, avatar, link, headings, text, cards, progress indicators and dividers. Pass 3b adds `ButtonMenu`, `IconButtonMenu`, `AvatarMenu`, `MenuItem`, `DropdownMenu`, `FileLoader` and `NavigationLink`. The two navigation layouts and `SidesheetContent` cannot sit inside a form, so they get their own demo forms in Step 9, where we change them anyway.
-Form1 is only changed by file, never in the Anvil design view. The demo form is built in code, so the design view cannot edit it.
-*Exit check:* Form1 runs in the Anvil editor, every section appears, and the console shows no errors. After Step 4 the same form also shows the light/dark switch.
-
-**Step 4. Prove palettes and dark mode.**
-Findings from the base files: every component colour already goes through the `--anvil-m3-*` variables, but `theme.css` used `%color:...%` tokens directly in 55 places (navigation, modal, text, data grid, page background). Those could not change at runtime, so each was replaced by the matching variable. The result in light mode is identical. The edit is marked in the file and logged in `docs/upstream-edits.md`.
-
-What was built:
-- **Eight palettes**: `default`, `professional_blue`, `warm_coral`, `calm_teal`, `sophisticated_purple`, `sky_blue`, `forest_green` and `desert_rose`. Each has a light and a dark scheme, 16 in all. `default` keeps the base theme's own colours: its dark scheme is the published M3 baseline dark scheme. Each of the other seven is the Material 3 Content scheme built from three source colours (main, second and accent). The Content scheme keeps the main source colour as Primary Container and gives every colour family strong colour, so these palettes stay vivid; only the backgrounds are near-neutral. Material's colour algorithm sets every light and dark shade from the source colours.
-- **`tools/build_palettes.py`** (library repo) holds the source colours and writes three files in the app repo: `theme/assets/m3x/palettes.css` (the colours of every palette, light and dark), `theme/parameters.yaml` (Anvil's colour list and the 16 colour presets in Anvil's Theme editor, one per palette and mode) and `client_code/_utils/m3x_presets.py` (which preset belongs to which palette and mode). Anvil's colour list holds `professional_blue` light, so a new app starts on that palette. The build checks every text and control colour against every background to the WCAG AA minimum (4.5:1 for text, 3:1 for outlines) and stops on any failure. The three files are never edited by hand. The palette colours are fixed.
-- **Two attributes on the page's root element** choose the colours: `data-m3x-palette` (a palette name; absent means the colours of the preset chosen in Anvil's Theme editor) and `data-m3x-theme` (`light`, `dark` or `system`; absent means light). Following the device's dark setting is opt-in (`system`), so an existing app never changes appearance unexpectedly.
+- **Eight palettes**: `default`, `professional_blue`, `warm_coral`, `calm_teal`, `sophisticated_purple`, `sky_blue`, `forest_green` and `desert_rose`. Each has a light and a dark scheme, 16 in all. `default` keeps the base theme's own colours; its dark scheme is the published M3 baseline dark scheme. Each of the other seven is the Material 3 Content scheme built from three source colours (main, second and accent). The Content scheme keeps the main source colour as Primary Container and gives every colour family strong colour, so these palettes stay vivid; only the backgrounds are near-neutral. Material's colour algorithm sets every light and dark shade from the source colours. The palette colours are fixed.
+- **`tools/build_palettes.py`** (library repo) holds the source colours and writes three files in the app repo: `theme/assets/m3x/palettes.css` (the colours of every palette, light and dark), `theme/parameters.yaml` (Anvil's colour list and the 16 colour presets in Anvil's Theme editor, one per palette and mode) and `client_code/_utils/m3x_presets.py` (which preset belongs to which palette and mode). Anvil's colour list holds `professional_blue` light, so a new app starts on that palette. The build checks every text and control colour against every background to the WCAG AA minimum (4.5:1 for text, 3:1 for outlines) and stops on any failure. The three files are never edited by hand.
+- Every colour in the theme's CSS goes through a variable (`--anvil-m3-*` for the base colours, `--m3x-color-*` for the colour roles the base lacks), so palette and mode can change while the app runs.
+- **Two attributes on the page's root element** choose the colours: `data-m3x-palette` (a palette name; absent means the colours of the preset chosen in Anvil's Theme editor) and `data-m3x-theme` (`light`, `dark` or `system`; absent means light). Following the device's dark setting is opt-in (`system`), so an app never changes appearance unexpectedly.
 - **`client_code/_utils/m3x_theming.py`** sets and remembers them from Python (`set_palette`, `set_mode`, `get_palette`, `get_mode`, `is_dark`, `editor_preset`, `apply_saved`). The preset chosen in Anvil's Theme editor is the app's starting palette and mode. A choice made through `set_palette` or `set_mode` is remembered in the browser and wins over the preset. Setting a mode always sets a palette too, because the dark colours belong to a palette. A multi-client app sets them once at start-up from the client's own setting.
-- **`Form1`** has Palette and Mode dropdowns at the top, so every component can be inspected in all 16 combinations (8 palettes, light and dark).
+- All other token values (typography, shape, elevation, state layers, motion and spacing) are in `theme/assets/m3x/tokens.css`, taken from the Jetpack Compose Material 3 token files.
 
-*Exit check:* in each of the 16 combinations, every section of `Form1` is readable and nothing keeps its old colour (page background, text, buttons, text boxes, cards, menus, dropdown lists, progress indicators). Hover and pressed states are visibly correct on filled, tonal and elevated buttons. If a combination fails, the cause is recorded in `docs/lessons.md` before Step 5.
+## 5. Maintenance
 
-**Step 5. Build the token layer.**
-Create `theme/assets/m3x/tokens.css` and import it from `theme.css`. The colour schemes are the palettes from Step 4. The token layer adds every M3 colour role the base lacks (Error Container, Inverse Primary, Surface Tint, Surface Dim, Surface Bright, Surface Container Lowest, Scrim, Shadow, and the Fixed and Fixed Dim roles for primary, secondary and tertiary) to every palette in light and dark, through `tools/build_palettes.py`. Take typography, shape, state-layer, motion and spacing values from the Jetpack Compose Material 3 token files (Section 2). Shadows use the M3 shadow values the base components already use. Spacing follows the M3 4 px grid. The type scale includes the expressive (emphasised) styles, and the shape scale includes the full expanded set of corner sizes. Motion tokens cover both the standard duration-and-easing set and the Expressive spring set (stiffness and damping ratio, with separate spatial and effects specs). The Expressive spatial springs are fast 800 / 0.6, default 380 / 0.8 and slow 200 / 0.8. The effects springs are fast 3800 / 1.0, default 1600 / 1.0 and slow 800 / 1.0. These values agree across the Flutter `motor` package, react-native-paper and other implementations. They are confirmed against Google's Jetpack Compose source before they are frozen.
-*Exit check:* every token category has variables, and a token reference page in the demo form shows them all in light and dark and passes the Section 5.9 checks.
+The demo form `Form1` shows every component in every variant and state, with Palette and Mode controls at the top for all 16 combinations. It is built in code from one data table (`SECTIONS` in `client_code/Form1/__init__.py`), so it is changed only by file, never in the Anvil design view. Every check below runs in `Form1`.
 
-**Step 6. Build the missing M3 components.**
-Take the gaps from `docs/gap-list.md` in priority order. Use the Component Build Loop (4.1) for each one.
-
-**Step 7. Build the M3 Expressive components.**
-Start with buttons and button groups, FABs, cards, expressive lists, navigation, progress indicators and snackbars. Use the Component Build Loop (4.1) for each one.
-
-**Step 8. Add motion.**
-Implement hover, press, focus, selection, loading and shape-morph transitions through the motion tokens from Step 5, in the helper module `client_code/_utils/m3x_motion.py` and in CSS. M3 Expressive motion is spring-based, not fixed-duration. The first task is to prove how springs are reproduced, trying these approaches in order and stopping at the first that works in the browsers we target: (1) a CSS `linear()` easing, generated by a small Python script (`tools/spring_to_linear.py` in the library repo) from the closed-form spring equation (mass 1, with stiffness and damping ratio from the tokens), with the animation duration set to the spring's settling time; (2) the Web Animations API, called from `m3x_motion.py` through `anvil.js`; (3) a small vendored JavaScript motion library (decision 7). The chosen approach is recorded in Section 3.2 before the rest of this step. Precedents: the Flutter `motor` package (`MaterialSpringMotion`), react-native-paper's motion tokens, and the web library `tankrap/m3x`, which drives its components with a spring solver of about 1 KB fed by the same tokens.
-*Exit check:* the motion rules in Section 5.6 pass, including reduced-motion behaviour.
-
-**Step 9. Add adaptive layouts.**
-Extend the existing navigation layouts and add new ones for compact, medium and expanded widths, following the M3 adaptive layout specification.
-*Exit check:* each layout works at the three width classes in the demo form.
-
-**Step 10. Release.**
-Complete the release checklist in Section 5.10, update `CHANGELOG.md`, publish the version in Anvil and tag the same commit.
-*Exit check:* a test app (not a production app) switches its dependency to the new version and works unchanged.
-
-**Step 11. Maintain against upstream.**
-At each upstream release, fetch the `upstream` remote, merge into `upstream-sync`, resolve conflicts using the log in `docs/upstream-edits.md`, run the demo form, then merge into `master`.
-
-### 4.1 Component Build Loop (used in Steps 6 and 7)
+### 5.1 Adding a component
 
 1. Read the component's page on m3.material.io. Record its anatomy, variants and states in `docs/components/<ComponentName>.md`.
 2. Define the API: property names, defaults, events. Use the same names that related components use.
@@ -127,33 +56,41 @@ At each upstream release, fetch the `upstream` remote, merge into `upstream-sync
 5. Export the component in `client_code/components/__init__.py`.
 6. Add a toolbox entry in `anvil.yaml` and its icons in `theme/assets/designer_icons/`.
 7. Add the component, in every variant and state, to the demo form.
-8. Run the Section 5.9 checks. Fix every failure.
+8. Run the Section 6.9 checks. Fix every failure.
 9. Commit to `master`.
 
-## 5. Rules for building the theme
+### 5.2 Upstream releases
 
-### 5.1 Specification
+At each upstream release, fetch the `upstream` remote, merge into `upstream-sync`, resolve conflicts using the record in `docs/upstream-edits.md`, run the demo form, then merge into `master`.
+
+### 5.3 Lessons
+
+`docs/lessons.md` lists the problems met while building the theme, their causes and the rule each one produced. Read it before any change to the theme.
+
+## 6. Rules
+
+### 6.1 Specification
 
 - m3.material.io is the source of truth for anatomy, variants, states and behaviour.
-- Where Anvil's base differs from the M3 spec, the spec wins for new components. Existing components are not changed for this reason alone (see 5.3).
+- Where Anvil's base differs from the M3 spec, the spec wins for new components. Existing components are not changed for this reason alone (see 6.3).
 - Every component gets its own `docs/components/<ComponentName>.md` before code is written.
-- m3.material.io is rendered by JavaScript and cannot be read automatically. Component specs are taken from the saved site pages, from text you paste in, and from the per-component docs in `docs/components/` of `github.com/material-components/material-components-android`, which follow the same spec.
+- m3.material.io is rendered by JavaScript and cannot be read automatically. Component specs are taken from pasted text of the site's pages and from the per-component docs in `docs/components/` of `github.com/material-components/material-components-android`, which follow the same spec.
 
-### 5.2 Tokens
+### 6.2 Tokens
 
 - Every colour, size, radius, font, shadow and animation value in new CSS comes from a `--m3x-*` variable. Hardcoded values are not allowed in component CSS.
 - Tokens are semantic (`primary`, `on-primary`, `surface`, `outline`), never raw hex values, outside `tokens.css` and the dark block.
 - Light and dark values are defined together for every palette. A token with only one scheme is incomplete.
 - Colour values come from `tools/build_palettes.py`. All other token values come from the Jetpack Compose Material 3 token files (Section 2). `tokens.css` records each source file, its version and the date it was read.
 
-### 5.3 Upstream files
+### 6.3 Upstream files
 
 - The base files stay as they are unless a change is needed. Prefer extending or adding a variant in a new file.
-- Every edit to a base file is marked in the file with a `/* m3x: reason */` comment (or `# m3x: reason` in Python) and logged in `docs/upstream-edits.md` with the file name and the reason. This is what makes Step 11 merges manageable.
+- Every edit to a base file is marked in the file with a `/* m3x: reason */` comment (or `# m3x: reason` in Python) and logged in `docs/upstream-edits.md` with the file name and the reason. This is what makes upstream merges manageable (Section 5.2).
 - Do not reformat or reorder base files. Formatting changes create merge conflicts.
 - Never edit the theme's own files through the Anvil editor. That means everything under `_Components`, `Layouts`, `_utils` and `theme`. The editor commits straight to `master` and writes the change into the base file (this happened once with a tooltip on `RadioButton`). Theme files are changed only in the repo files, by commit. The editor is used to run and look at `Form1`.
 
-### 5.4 Component construction
+### 6.4 Component construction
 
 - One folder per component under `client_code/_Components/`, named in PascalCase.
 - Build properties with the helpers in `client_code/_utils/properties.py` rather than writing new property code.
@@ -165,28 +102,28 @@ At each upstream release, fetch the `upstream` remote, merge into `upstream-sync
 - Implement every state that applies: default, hover, focus, pressed, selected, disabled, loading, error.
 - A disabled component must not raise events.
 
-### 5.5 CSS
+### 6.5 CSS
 
 - Each component's CSS lives in its own file under `theme/assets/m3x/`. `theme.css` contains only `@import` lines, the variable blocks and the page-level base styles.
 - Every selector begins with `.m3x-`, or with `.anvil-role-m3x-` where an m3x Role styles an Anvil element (Anvil names a Role's class `anvil-role-<role>`). No bare element selectors and no selectors that match existing Anvil classes alone.
 - Avoid `!important`. If an existing Anvil rule can only be beaten with `!important`, add a comment saying which rule and why.
 - Do not add global rules that change how existing components look.
-- Do not use fixed pixel widths for layout. Use relative units and the width classes in 5.7.
+- Do not use fixed pixel widths for layout. Use relative units and the width classes in 6.7.
 - A component whose shadow, focus ring or touch target reaches outside its box has the outer margin `var(--m3x-component-outer-margin-block) var(--m3x-component-outer-margin-inline)` (8 px above and below, 4 px at the sides). A component with a shadow of level 3 or higher uses `var(--m3x-component-outer-margin-elevated)` (16 px) instead. Anvil's containers (FlowPanel, ColumnPanel) cut off anything outside a component's margin box, and content that reaches outside makes the container scroll.
 - Use Anvil's `%color:...%` tokens where Anvil needs them, and `--m3x-*` variables everywhere else.
 - Test the CSS in light and dark before merging.
 
-### 5.6 Motion
+### 6.6 Motion
 
 - Motion communicates state, hierarchy or cause and effect. It is not decoration.
-- All durations, easings and springs come from the motion tokens (Step 5). Standard transitions are roughly 150–300 ms. Expressive transitions follow the spring tokens, and their settling time is set by the spec, not by that range.
+- All durations, easings and springs come from the motion tokens in `tokens.css`. Standard transitions are roughly 150–300 ms. Expressive transitions follow the spring tokens, and their settling time is set by the spec, not by that range.
 - Animate only `transform`, `opacity`, colour and shadow where possible.
 - Honour `@media (prefers-reduced-motion: reduce)` in every animated rule.
 - Animation must never block clicks or delay events.
 - Shape morphing is used only where it clarifies a state change.
-- Motion code lives in `m3x_motion.py` and CSS. JavaScript follows decision 7 in Section 3.2.
+- Motion code lives in `m3x_motion.py` and CSS. JavaScript follows decision 7 in Section 3.
 
-### 5.7 Layout
+### 6.7 Layout
 
 - Design for the three M3 width classes: compact, medium and expanded.
 - Build on the existing navigation layouts. Do not rewrite them.
@@ -194,13 +131,13 @@ At each upstream release, fetch the `upstream` remote, merge into `upstream-sync
 - Spacing and alignment follow the spacing tokens.
 - Layouts must work on small laptops, tablets and phones.
 
-### 5.8 Python
+### 6.8 Python
 
 - The Python code follows the base's `.ruff.toml`: `E`, `F` and `I001` checks, import order with `anvil` as third-party, and quote style preserved.
 - Modular helpers, one purpose per file: `m3x_motion.py`, `m3x_loading.py`, `m3x_snackbar.py`, `m3x_theming.py`.
 - Components do not import each other's internals. Shared code goes in `client_code/_utils/`.
 
-### 5.9 Testing (before every commit to `master`)
+### 6.9 Testing (before every commit to `master`)
 
 1. The component appears in the demo form in every variant and state.
 2. It looks correct in light and dark.
@@ -212,7 +149,7 @@ At each upstream release, fetch the `upstream` remote, merge into `upstream-sync
 8. The component works inside a real Anvil page, not only in the demo form.
 9. Existing components in the demo form are unchanged (regression check).
 
-### 5.10 Documentation, versioning and release
+### 6.10 Documentation and release
 
 - Every new Role, component, property, event and CSS class is documented before merge.
 - Keep `CHANGELOG.md` in the same format as the base's, with an entry per release.

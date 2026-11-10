@@ -1,6 +1,6 @@
 # Button (M3 Expressive)
 
-Base component `m3.Button`, extended by m3x with the properties `size`, `shape`, `toggle` and `selected`. CSS `theme/assets/m3x/button-expressive.css`. Gap E1. The base edits are listed in `docs/upstream-edits.md`.
+Base component `m3.Button`, extended by m3x with the properties `size`, `shape`, `toggle` and `selected`. CSS `theme/assets/m3x/button-expressive.css`. The base edits are listed in `docs/upstream-edits.md`.
 
 ## 1. What it is
 

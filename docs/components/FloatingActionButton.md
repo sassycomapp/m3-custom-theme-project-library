@@ -1,6 +1,6 @@
 # FloatingActionButton
 
-Component `m3.FloatingActionButton` (`client_code/_Components/FloatingActionButton/`), CSS `theme/assets/m3x/fab.css`, tokens `--m3x-fab-*` in `theme/assets/m3x/tokens.css`. Gap C5.
+Component `m3.FloatingActionButton` (`client_code/_Components/FloatingActionButton/`), CSS `theme/assets/m3x/fab.css`, tokens `--m3x-fab-*` in `theme/assets/m3x/tokens.css`.
 
 ## 1. What it is
 

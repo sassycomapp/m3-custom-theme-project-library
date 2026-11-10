@@ -132,4 +132,4 @@ All colours, type sizes, shapes, elevations, state layers, motion and spacing co
 
 ## 9. Versions
 
-Versions follow semantic versioning: `v2.0.0` is the first release. A version that changes a component's properties or events in a way that breaks existing apps raises the first number. Each release is listed in `CHANGELOG.md` in the theme app's repository.
+The theme has one version, `v2.0.0`. Every change to the theme is released under that version, so an app that depends on `v2.0.0` always has the current theme.

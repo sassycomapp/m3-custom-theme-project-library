@@ -1,6 +1,6 @@
 # Menus (M3 Expressive)
 
-The base menus (ButtonMenu, IconButtonMenu, AvatarMenu, DropdownMenu and Menu), restyled by one app-wide m3x setting, plus the m3x property `selected` on MenuItem. CSS `theme/assets/m3x/menu-expressive.css`. Setting in `client_code/_utils/m3x_theming.py`. Gap E6. The base edits are listed in `docs/upstream-edits.md`.
+The base menus (ButtonMenu, IconButtonMenu, AvatarMenu, DropdownMenu and Menu), restyled by one app-wide m3x setting, plus the m3x property `selected` on MenuItem. CSS `theme/assets/m3x/menu-expressive.css`. Setting in `client_code/_utils/m3x_theming.py`. The base edits are listed in `docs/upstream-edits.md`.
 
 ## 1. What it is
 

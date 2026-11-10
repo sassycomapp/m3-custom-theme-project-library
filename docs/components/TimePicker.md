@@ -1,6 +1,6 @@
 # TimePicker
 
-Component `m3.TimePicker` (`client_code/_Components/TimePicker/`), shared field code `client_code/_utils/m3x_picker.py`, CSS `theme/assets/m3x/time-picker.css`, tokens `--m3x-time-picker-*` in `theme/assets/m3x/tokens.css`. Gap C12.
+Component `m3.TimePicker` (`client_code/_Components/TimePicker/`), shared field code `client_code/_utils/m3x_picker.py`, CSS `theme/assets/m3x/time-picker.css`, tokens `--m3x-time-picker-*` in `theme/assets/m3x/tokens.css`.
 
 ## 1. What it is
 

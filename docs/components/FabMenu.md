@@ -1,6 +1,6 @@
 # FabMenu
 
-Component `m3.FabMenu` (`client_code/_Components/FabMenu/`), CSS `theme/assets/m3x/fab-menu.css`, tokens `--m3x-fab-menu-*` in `theme/assets/m3x/tokens.css`. Gap C19.
+Component `m3.FabMenu` (`client_code/_Components/FabMenu/`), CSS `theme/assets/m3x/fab-menu.css`, tokens `--m3x-fab-menu-*` in `theme/assets/m3x/tokens.css`.
 
 ## 1. What it is
 

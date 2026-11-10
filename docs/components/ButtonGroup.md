@@ -1,6 +1,6 @@
 # ButtonGroup
 
-Component `m3.ButtonGroup` (`client_code/_Components/ButtonGroup/`), CSS `theme/assets/m3x/button-group.css`, tokens `--m3x-button-group-*` in `theme/assets/m3x/tokens.css`. Gap C9.
+Component `m3.ButtonGroup` (`client_code/_Components/ButtonGroup/`), CSS `theme/assets/m3x/button-group.css`, tokens `--m3x-button-group-*` in `theme/assets/m3x/tokens.css`.
 
 ## 1. What it is
 
