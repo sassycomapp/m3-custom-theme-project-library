@@ -11,7 +11,7 @@ The theme takes the place of Anvil's Material 3 Theme. An app never uses both.
 1. Open the app in the Anvil editor.
 2. Open **Settings**, then **Dependencies**.
 3. If the app lists Anvil's Material 3 Theme, remove it.
-4. Add a dependency on the **m3-custom-theme** app, and choose version **v2.0.0**.
+4. Add a dependency on the **m3-custom-theme** app (`UGGJBAZUZ74XZ7VU`), and choose the branch **master**.
 5. Run the app. Every `m3` component, layout and import works unchanged, because the package name is the same.
 
 A new app starts from a blank Anvil app with the same dependency.
@@ -132,4 +132,4 @@ All colours, type sizes, shapes, elevations, state layers, motion and spacing co
 
 ## 9. Versions
 
-The theme has one version, `v2.0.0`. Every change to the theme is released under that version, so an app that depends on `v2.0.0` always has the current theme.
+The theme has one version, on its `master` branch. Every change to the theme is released there, so an app that depends on `master` always has the current theme.
